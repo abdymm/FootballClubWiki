@@ -7,7 +7,7 @@
     android:paddingTop="10dp">
 
     <ImageView
-        android:id="@+id/list_club_logo"
+        android:id="@+id/list_team_logo"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:src="@drawable/logo_persib"
@@ -16,31 +16,31 @@
         android:layout_marginRight="5dp"/>
 
     <TextView
-        android:id="@+id/list_club_name"
+        android:id="@+id/list_team_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/list_club_logo"
+        android:layout_toEndOf="@+id/list_team_logo"
         android:layout_marginTop="2dp"
         android:textSize="18sp"
         android:text="PERSIB BANDUNG" />
 
     <TextView
-        android:id="@+id/list_club_nick"
-        android:layout_below="@+id/list_club_name"
+        android:id="@+id/list_team_nick"
+        android:layout_below="@+id/list_team_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/list_club_logo"
+        android:layout_toEndOf="@+id/list_team_logo"
         android:layout_marginTop="2dp"
         android:textSize="16sp"
         android:textStyle="italic"
         android:text="Maung Bandung" />
 
     <TextView
-        android:id="@+id/list_club_stadium"
-        android:layout_below="@+id/list_club_nick"
+        android:id="@+id/list_team_stadium"
+        android:layout_below="@+id/list_team_nick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/list_club_logo"
+        android:layout_toEndOf="@+id/list_team_logo"
         android:layout_marginTop="2dp"
         android:textSize="14sp"
         android:text="Gelora Bandung Lautan API, Bandung" />
