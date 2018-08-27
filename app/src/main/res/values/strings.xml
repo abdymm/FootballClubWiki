@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">FootballClubWiki</string>
+    <string name="EXTRA_CLUB">club</string>
+    <string name="dumm_club_desc">Persib Bandung adalah sebuah tim sepak bola Indonesia terbesar yang berdiri pada 14 Maret 1933, klub ini berbasis di Bandung, Jawa Barat. Persib saat ini bermain di Gojek Liga 1 Indonesia dan Piala Indonesia.</string>
+    <string name="dumm_club_title">PERSIB BANDUNG</string>
+    <string name="alert_exit">Anda yakin ingin keluar?</string>
+
+    <string-array name="club_name">
+        <item>Arema FC</item>
+        <item>Persib Bandung</item>
+        <item>Bali United</item>
+    </string-array>
+
+    <string-array name="club_desc">
+        <item>Arema FC (dahulu bernama Arema Malang), atau biasa disebut dan dikenal sebagai Arema, adalah sebuah klub sepak bola yang berasal dari Malang, Jawa Timur, Indonesia. Arema didirikan pada tanggal 11 Agustus 1987, Arema mempunyai julukan "Singo Edan".</item>
+        <item>Persib Bandung adalah sebuah tim sepak bola Indonesia terbesar yang berdiri pada 14 Maret 1933, klub ini berbasis di Bandung, Jawa Barat. Persib saat ini bermain di Gojek Liga 1 Indonesia dan Piala Indonesia.</item>
+        <item>Bali United F.C. merupakan sebuah klub sepak bola Indonesia, yang bermarkas Stadion Kapten I Wayan Dipta, Kabupaten Gianyar, Provinsi Bali.</item>
+    </string-array>
+
+
+
+    <array name="club_image">
+        <item>@drawable/logo_arema</item>
+        <item>@drawable/logo_persib</item>
+        <item>@drawable/logo_bali</item>
+    </array>
+</resources>
