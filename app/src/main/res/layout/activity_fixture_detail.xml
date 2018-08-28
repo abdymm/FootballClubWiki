@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.match.detail.FixtureDetailActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/box_fixture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_vertical_margin"
+                android:paddingRight="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:background="@drawable/border_bottom">
+
+                <TextView
+                    android:id="@+id/event_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="0dp"
+                    android:fontFamily="@font/lato"
+                    android:text="11 February 2018"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/event_time"
+                    android:layout_below="@+id/event_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/lato"
+                    android:text="21:00 WIB"
+                    android:textSize="12sp"/>
+
+                <RelativeLayout
+                    android:id="@+id/box_home_away"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:layout_below="@+id/event_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true">
+
+                        <ImageView
+                            android:id="@+id/event_home_badge"
+                            android:layout_width="@dimen/badge_size"
+                            android:layout_height="@dimen/badge_size"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/badge_dumm" />
+
+                        <TextView
+                            android:id="@+id/event_home_name"
+                            android:layout_below="@+id/event_home_badge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lato"
+                            android:layout_centerHorizontal="true"
+                            android:text="PERSIB"
+                            android:layout_marginTop="@dimen/margin"
+                            android:textSize="@dimen/text_sub"/>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true">
+
+                        <ImageView
+                            android:id="@+id/event_away_badge"
+                            android:layout_width="@dimen/badge_size"
+                            android:layout_height="@dimen/badge_size"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/badge_dumm" />
+
+                        <TextView
+                            android:id="@+id/event_away_name"
+                            android:layout_below="@+id/event_away_badge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lato"
+                            android:text="AREMA MALANG"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/margin"
+                            android:textSize="@dimen/text_sub"/>
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/event_score"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="3:1"
+                        android:fontFamily="@font/lato"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="20sp"/>
+
+                    <TextView
+                        android:id="@+id/event_time_status"
+                        android:layout_below="@+id/event_score"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="FULL TIME"
+                        android:fontFamily="@font/lato"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:textSize="@dimen/text_sub"/>
+
+
+
+
+                </RelativeLayout>
+
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/box_scorer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_below="@+id/box_fixture">
+
+                <TextView
+                    android:id="@+id/event_title_score"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_border"
+                    android:fontFamily="@font/lato_bold"
+                    android:padding="@dimen/margin_small"
+                    android:text="Goal Scorer"
+                    android:textSize="@dimen/text_sub_med"
+                    android:textColor="#fff" />
+
+                <LinearLayout
+                    android:layout_below="@+id/event_title_score"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:paddingLeft="@dimen/margin"
+                    android:paddingRight="@dimen/margin">
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/event_home_goal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="50' : Harry Kane\n52' : Lucas Moura\n85' : Lucas Moura"
+                            android:textSize="@dimen/text_sub_med"
+                            android:fontFamily="@font/lato"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="right"
+                        android:gravity="right">
+
+                        <TextView
+                            android:id="@+id/event_away_goal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="22' : Romelu Lukaku"
+                            android:textSize="@dimen/text_sub_med"
+                            android:fontFamily="@font/lato"/>
+
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/box_lineup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_below="@+id/box_scorer">
+
+                <TextView
+                    android:id="@+id/event_title_lineup"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_border"
+                    android:fontFamily="@font/lato_bold"
+                    android:padding="@dimen/margin_small"
+                    android:text="Lineup"
+                    android:textSize="@dimen/text_sub_med"
+                    android:textColor="#fff" />
+
+                <LinearLayout
+                    android:layout_below="@+id/event_title_lineup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:paddingLeft="@dimen/margin"
+                    android:paddingRight="@dimen/margin">
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/event_home_lineup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="(GK) David De Gea"
+                            android:textSize="@dimen/text_sub_med"
+                            android:fontFamily="@font/lato"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="right"
+                        android:gravity="right">
+
+                        <TextView
+                            android:id="@+id/event_away_lineup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="Hugo Lloris (GK)"
+                            android:textSize="@dimen/text_sub_med"
+                            android:fontFamily="@font/lato"/>
+
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

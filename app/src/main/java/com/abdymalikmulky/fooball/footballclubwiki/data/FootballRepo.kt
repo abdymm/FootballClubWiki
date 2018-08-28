@@ -2,15 +2,9 @@ package com.abdymalikmulky.fooball.footballclubwiki.data
 
 
 import android.content.Context
-import com.abdymalikmulky.fooball.footballclubwiki.util.ApiHelper
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class FootballRepo(context: Context) : FootballDataSource {
-
-
 
     internal var context: Context
     internal var footballRemote: FootballRemote
@@ -28,7 +22,7 @@ class FootballRepo(context: Context) : FootballDataSource {
         footballRemote.loadLeague(callback)
     }
 
-    override fun loadTeamLeague(leagueId: String, callback: FootballDataSource.LoadTeamLeagueCallback) {
+    override fun loadTeamLeague(leagueId: String, callback: FootballDataSource.LoadTeamsCallback) {
         footballRemote.loadTeamLeague(leagueId, callback)
     }
 
@@ -36,5 +30,8 @@ class FootballRepo(context: Context) : FootballDataSource {
         footballRemote.loadEventLeague(isPastEvenet, leagueId, callback)
     }
 
+    override fun loadTeam(teamId: String, callback: FootballDataSource.LoadTeamCallback) {
+        footballRemote.loadTeam(teamId, callback)
+    }
 
 }

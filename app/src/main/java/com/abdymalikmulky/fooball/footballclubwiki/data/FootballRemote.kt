@@ -50,7 +50,7 @@ class FootballRemote(context: Context) : FootballDataSource {
         })
     }
 
-    override fun loadTeamLeague(leagueId: String, callback: FootballDataSource.LoadTeamLeagueCallback) {
+    override fun loadTeamLeague(leagueId: String, callback: FootballDataSource.LoadTeamsCallback) {
         val call = footballApi.getTeams(leagueId)
         call.enqueue(object : Callback<TeamResponse>{
             override fun onFailure(call: Call<TeamResponse>, t: Throwable) {
@@ -64,6 +64,28 @@ class FootballRemote(context: Context) : FootballDataSource {
                     teams = bodyResponse!!.teams
 
                     callback.onLoaded(teams)
+                } else {
+                    callback.onFailed(response.message())
+                }
+            }
+
+        })
+    }
+
+    override fun loadTeam(teamId: String, callback: FootballDataSource.LoadTeamCallback) {
+        val call = footballApi.getTeam(teamId)
+        call.enqueue(object : Callback<TeamResponse>{
+            override fun onFailure(call: Call<TeamResponse>, t: Throwable) {
+                callback.onFailed(t.localizedMessage)
+            }
+            override fun onResponse(call: Call<TeamResponse>, response: Response<TeamResponse>) {
+                if (response.isSuccessful) {
+                    val bodyResponse = response.body()
+                    val teams: List<Team>
+                    val team: Team
+                    teams = bodyResponse!!.teams
+                    team = teams.get(0)
+                    callback.onLoaded(team)
                 } else {
                     callback.onFailed(response.message())
                 }

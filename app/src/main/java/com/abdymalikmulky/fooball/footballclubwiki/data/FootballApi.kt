@@ -17,6 +17,9 @@ interface FootballApi {
     @GET(EndpointUtil.GET_TEAMS)
     fun getTeams(@Query(EndpointUtil.KEY_ID) leagueId: String): Call<TeamResponse>
 
+    @GET(EndpointUtil.GET_TEAM)
+    fun getTeam(@Query(EndpointUtil.KEY_ID) teamId: String): Call<TeamResponse>
+
     @GET(EndpointUtil.GET_PLAYERS)
     fun getPlayers(@Query(EndpointUtil.KEY_ID) teamId: String): Call<Team>
 

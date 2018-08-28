@@ -12,6 +12,7 @@ class EndpointUtil {
 
         //TEAM
         const val GET_TEAMS = ENDPOINT_PATH + "lookup_all_teams.php"
+        const val GET_TEAM = ENDPOINT_PATH + "lookupteam.php"
 
         //PLAYER
         const val GET_PLAYERS = ENDPOINT_PATH + "lookup_all_players.php"

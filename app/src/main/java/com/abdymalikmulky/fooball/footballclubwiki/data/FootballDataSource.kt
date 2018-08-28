@@ -9,7 +9,9 @@ interface FootballDataSource {
 
     fun loadLeague(callback: LoadLeagueCallback)
 
-    fun loadTeamLeague(leagueId: String, callback: LoadTeamLeagueCallback)
+    fun loadTeamLeague(leagueId: String, callback: LoadTeamsCallback)
+
+    fun loadTeam(teamId: String, callback: LoadTeamCallback)
 
     fun loadEventLeague(isPastEvenet: Boolean, leagueId: String, callback: LoadEventLeagueCallback)
 
@@ -18,8 +20,13 @@ interface FootballDataSource {
         fun onFailed(errorMsg: String)
     }
 
-    interface LoadTeamLeagueCallback {
+    interface LoadTeamsCallback {
         fun onLoaded(teams: List<Team>)
+        fun onFailed(errorMsg: String)
+    }
+
+    interface LoadTeamCallback {
+        fun onLoaded(team: Team)
         fun onFailed(errorMsg: String)
     }
 

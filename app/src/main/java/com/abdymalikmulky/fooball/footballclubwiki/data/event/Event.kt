@@ -1,6 +1,7 @@
 package com.abdymalikmulky.fooball.footballclubwiki.data.event
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Event(
         @SerializedName("idEveent")
@@ -40,7 +41,7 @@ data class Event(
         val homeLineUpDEF: String,
 
         @SerializedName("strHomeLineupMidfield")
-        val homeLineUMD: String,
+        val homeLineUpMD: String,
 
         @SerializedName("strHomeLineupForward")
         val homeLineUpFW: String,
@@ -58,10 +59,10 @@ data class Event(
         val awayLineUpDEF: String,
 
         @SerializedName("strAwayLineupMidfield")
-        val awayLineUMD: String,
+        val awayLineUpMD: String,
 
         @SerializedName("strAwayLineupForward")
         val awayLineUpFW: String,
 
         @SerializedName("strAwayLineupSubstitutes")
-        val awayLineUpSUB: String)
+        val awayLineUpSUB: String) : Serializable

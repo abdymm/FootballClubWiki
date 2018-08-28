@@ -41,7 +41,7 @@ class TeamPresenter(footballRepo: FootballRepo, teamView: TeamContract.View) : T
 
     override fun loadTeam(leagueId: String) {
         teamView.showLoading()
-        footballRepo.loadTeamLeague(leagueId, object : FootballDataSource.LoadTeamLeagueCallback {
+        footballRepo.loadTeamLeague(leagueId, object : FootballDataSource.LoadTeamsCallback {
             override fun onLoaded(teams: List<Team>) {
                 teamView.hideLoading()
                 teamView.showTeamList(teams)

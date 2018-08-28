@@ -16,6 +16,7 @@ import android.widget.ProgressBar
 import com.abdymalikmulky.fooball.footballclubwiki.R
 import com.abdymalikmulky.fooball.footballclubwiki.data.FootballRepo
 import com.abdymalikmulky.fooball.footballclubwiki.data.event.Event
+import com.abdymalikmulky.fooball.footballclubwiki.ui.main.match.detail.FixtureDetailActivity
 import com.abdymalikmulky.fooball.footballclubwiki.ui.main.team.TeamDetailActivity
 import com.abdymalikmulky.fooball.footballclubwiki.util.gone
 import com.abdymalikmulky.fooball.footballclubwiki.util.visible
@@ -51,6 +52,7 @@ class FixtureFragment : Fragment(), FixtureContract.View {
                 topPadding = dip(padding)
                 leftPadding = dip(padding)
                 rightPadding = dip(padding)
+                bottomPadding = dip(60)
 
                 swipeRefresh = swipeRefreshLayout {
                     setColorSchemeResources(R.color.colorAccent,
@@ -103,7 +105,9 @@ class FixtureFragment : Fragment(), FixtureContract.View {
         fixturePresenter.loadEvent(isPastEvent, "4328")
 
         fixtureAdapter = FixtureAdapter(isPastEvent, events) {
-            startActivity(intentFor<TeamDetailActivity>(getString(R.string.EXTRA_FIXTURE) to it))
+
+            startActivity(intentFor<FixtureDetailActivity>(getString(R.string.EXTRA_FIXTURE) to it, getString(R.string.KEY_IS_PAST_EVENT) to isPastEvent))
+
         }
         listFixture.adapter = fixtureAdapter
         swipeRefresh.onRefresh {

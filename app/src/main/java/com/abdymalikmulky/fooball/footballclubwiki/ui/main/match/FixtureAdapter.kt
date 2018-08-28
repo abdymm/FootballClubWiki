@@ -35,9 +35,6 @@ class FixtureAdapter(private val isPastEvent: Boolean,private val events: List<E
     class EventViewHolder(view: View) : RecyclerView.ViewHolder(view){
         fun bindItem(isPastEvent: Boolean, event: Event, onItemClickListener: (Event) -> Unit) {
 
-
-
-
             itemView.list_event_date.text = DateTimeUtil.convertToReadableDate(event.dateEvent)
             itemView.list_event_time.text = event.timeEvent
             itemView.list_event_home_name.text = event.homeTeam

@@ -58,7 +58,7 @@
                         android:layout_height="@dimen/badge_size"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/logo_persib" />
+                        android:src="@drawable/badge_dumm" />
 
                     <TextView
                         android:id="@+id/list_event_home_name"
@@ -83,7 +83,7 @@
                         android:layout_height="@dimen/badge_size"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/logo_arema" />
+                        android:src="@drawable/badge_dumm" />
 
                     <TextView
                         android:id="@+id/list_event_away_name"
