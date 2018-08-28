@@ -1,6 +1,6 @@
 package com.abdymalikmulky.fooball.footballclubwiki.ui.login
 
-import com.abdymalikmulky.fooball.footballclubwiki.ui.team.TeamListActivity
+import com.abdymalikmulky.fooball.footballclubwiki.ui.main.team.TeamListActivity
 import com.abdymalikmulky.fooball.footballclubwiki.R
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick

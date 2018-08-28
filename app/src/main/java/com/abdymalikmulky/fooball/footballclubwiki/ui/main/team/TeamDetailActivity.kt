@@ -1,9 +1,9 @@
-package com.abdymalikmulky.fooball.footballclubwiki.ui.team
+package com.abdymalikmulky.fooball.footballclubwiki.ui.main.team
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.abdymalikmulky.fooball.footballclubwiki.R
-import com.abdymalikmulky.fooball.footballclubwiki.data.Team
+import com.abdymalikmulky.fooball.footballclubwiki.data.team.Team
 import org.jetbrains.anko.*
 
 class TeamDetailActivity : AppCompatActivity() {
