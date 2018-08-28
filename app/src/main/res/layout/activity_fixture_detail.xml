@@ -169,7 +169,7 @@
                             android:id="@+id/event_home_goal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="50' : Harry Kane\n52' : Lucas Moura\n85' : Lucas Moura"
+                            android:text="-"
                             android:textSize="@dimen/text_sub_med"
                             android:fontFamily="@font/lato"/>
 
@@ -187,7 +187,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="right"
-                            android:text="22' : Romelu Lukaku"
+                            android:text="-"
                             android:textSize="@dimen/text_sub_med"
                             android:fontFamily="@font/lato"/>
 
@@ -233,7 +233,7 @@
                             android:id="@+id/event_home_lineup"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="(GK) David De Gea"
+                            android:text="-"
                             android:textSize="@dimen/text_sub_med"
                             android:fontFamily="@font/lato"/>
 
@@ -251,7 +251,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="right"
-                            android:text="Hugo Lloris (GK)"
+                            android:text="-"
                             android:textSize="@dimen/text_sub_med"
                             android:fontFamily="@font/lato"/>
 

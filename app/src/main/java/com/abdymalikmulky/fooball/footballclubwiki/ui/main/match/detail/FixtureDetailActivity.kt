@@ -77,15 +77,15 @@ class FixtureDetailActivity : AppCompatActivity(), FixtureDetailContract.View {
 
         if(isPastEvent) {
             event_time_status.text = "FULL TIME"
+
+            event_home_goal.text = convertStringGoalDetailsToList(event.homeGoalDetails)
+            event_away_goal.text = convertStringGoalDetailsToList(event.awayGoalDetails)
+
+            event_home_lineup.text = convertStringLineUpToList(event.homeLineUpGK, event.homeLineUpDEF, event.homeLineUpMD, event.homeLineUpFW)
+            event_away_lineup.text = convertStringLineUpToList(event.awayLineUpGK, event.awayLineUpDEF, event.awayLineUpMD, event.awayLineUpFW)
         } else {
             event_time_status.text = "UPCOMING"
         }
-
-        event_home_goal.text = convertStringGoalDetailsToList(event.homeGoalDetails)
-        event_away_goal.text = convertStringGoalDetailsToList(event.awayGoalDetails)
-
-        event_home_lineup.text = convertStringLineUpToList(event.homeLineUpGK, event.homeLineUpDEF, event.homeLineUpMD, event.homeLineUpFW)
-        event_away_lineup.text = convertStringLineUpToList(event.awayLineUpGK, event.awayLineUpDEF, event.awayLineUpMD, event.awayLineUpFW)
 
         fixtureDetailPresenter.loadTeam(event.idHomeTeam)
         fixtureDetailPresenter.loadTeam(event.idAwayTeam)
