@@ -24,6 +24,8 @@ import org.jetbrains.anko.support.v4.*
 
 class TeamListFragment : Fragment(), TeamContract.View {
 
+
+
     //Presenter
     private lateinit var teamPresenter: TeamContract.Presenter
 
@@ -147,6 +149,10 @@ class TeamListFragment : Fragment(), TeamContract.View {
         this.teams.clear()
         this.teams.addAll(teams)
         teamListTeamAdapter.notifyDataSetChanged()
+    }
+
+    override fun teamFavorited(teamId: String) {
+        toast(teamId)
     }
 
     override fun setPresenter(presenter: TeamContract.Presenter) {

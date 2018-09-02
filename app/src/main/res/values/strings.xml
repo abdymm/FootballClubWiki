@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Football Wiki</string>
+    <string name="app_name">Teammates</string>
     <string name="EXTRA_TEAM">team</string>
     <string name="EXTRA_FIXTURE">fixture</string>
     <string name="dumm_club_desc">Persib Bandung adalah sebuah tim sepak bola Indonesia terbesar yang berdiri pada 14 Maret 1933, klub ini berbasis di Bandung, Jawa Barat. Persib saat ini bermain di Gojek Liga 1 Indonesia dan Piala Indonesia.</string>
@@ -28,8 +28,11 @@
     <string name="title_scores">Scores</string>
     <string name="title_fixture">Fixture</string>
     <string name="title_directory_team">Team</string>
+    <string name="title_fav_match">Yours</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="KEY_IS_PAST_EVENT">IS_PAST_EVENT</string>
+    <string name="KEY_IS_FAVORITE">IS_FAVORITE</string>
+    <string name="league_id">4328</string>
 </resources>

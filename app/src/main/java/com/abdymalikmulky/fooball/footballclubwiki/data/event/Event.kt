@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class Event(
-        @SerializedName("idEveent")
+        @SerializedName("idEvent")
         val idEvent: String,
 
         @SerializedName("strDate")
@@ -25,6 +25,10 @@ data class Event(
         @SerializedName("strAwayTeam")
         val awayTeam: String,
 
+        var homeTeamBadge: String,
+
+        var awayTeamBadge: String,
+
         @SerializedName("intHomeScore")
         val homeScore: Int,
 
@@ -32,7 +36,7 @@ data class Event(
         val awayScore: Int,
 
         @SerializedName("strHomeGoalDetails")
-        val homeGoalDetails: String,
+        val homeGoalDetails: String?,
 
         @SerializedName("strHomeLineupGoalkeeper")
         val homeLineUpGK: String,
@@ -50,7 +54,7 @@ data class Event(
         val homeLineUpSUB: String,
 
         @SerializedName("strAwayGoalDetails")
-        val awayGoalDetails: String,
+        val awayGoalDetails: String?,
 
         @SerializedName("strAwayLineupGoalkeeper")
         val awayLineUpGK: String,
@@ -65,4 +69,11 @@ data class Event(
         val awayLineUpFW: String,
 
         @SerializedName("strAwayLineupSubstitutes")
-        val awayLineUpSUB: String) : Serializable
+        val awayLineUpSUB: String) : Serializable {
+
+        companion object {
+                const val TABLE: String = "EVENT_FAV"
+                const val ID: String = "ID_"
+                const val EVENT_ID: String = "EVENT_ID"
+        }
+}

@@ -5,6 +5,8 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
 import com.abdymalikmulky.fooball.footballclubwiki.R
 import com.abdymalikmulky.fooball.footballclubwiki.ui.main.match.FixtureFragment
 import com.abdymalikmulky.fooball.footballclubwiki.ui.main.team.TeamListFragment
@@ -20,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         toolbar = supportActionBar!!
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
 
         val fixtureFragment = FixtureFragment.newInstance(true)
         openFragment(fixtureFragment)
@@ -37,8 +40,8 @@ class MainActivity : AppCompatActivity() {
                 openFragment(fixtureFragment)
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_team_dir -> {
-                val teamFragment = TeamListFragment.newInstance()
+            R.id.navigation_fav_match -> {
+                val teamFragment = FixtureFragment.newInstance(1)
                 openFragment(teamFragment)
                 return@OnNavigationItemSelectedListener true
             }
@@ -46,12 +49,29 @@ class MainActivity : AppCompatActivity() {
         false
     }
 
-
-
     private fun openFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            R.id.menu_team -> {
+                val teamFragment = TeamListFragment.newInstance()
+                openFragment(teamFragment)
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+
 }

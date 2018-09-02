@@ -94,6 +94,10 @@ class FootballRemote(context: Context) : FootballDataSource {
         })
     }
 
+    override fun setFavoriteTeam(favorite: Boolean, teamId: String, callback: FootballDataSource.SetFavoriteTeamCallback) {
+        //maybe next store in rmeote server
+    }
+
     override fun loadEventLeague(isPastEvenet: Boolean, leagueId: String, callback: FootballDataSource.LoadEventLeagueCallback) {
         var call: Call<EventResponse>
         if(isPastEvenet) {
@@ -119,5 +123,11 @@ class FootballRemote(context: Context) : FootballDataSource {
             }
 
         })
+    }
+    override fun setFavoriteEvent(favorite: Boolean, eventId: String, callback: FootballDataSource.SetFavoriteEventCallback) {
+    }
+    override fun loadFavoriteEvent(callback: FootballDataSource.LoadFavEventLeagueCallback) {
+    }
+    override fun isEventHasFavorited(eventId: String, callback: FootballDataSource.IsEventFavLeagueCallback) {
     }
 }

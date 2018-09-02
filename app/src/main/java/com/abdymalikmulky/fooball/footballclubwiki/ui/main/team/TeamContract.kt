@@ -15,10 +15,13 @@ interface TeamContract {
         fun showLeagueList(leagues: List<League>)
         fun showTeamList(teams: List<Team>)
 
+        fun teamFavorited(teamId: String)
     }
     interface Presenter : BasePresenter {
         fun loadLeague()
         fun loadTeam(leagueId: String)
+
+        fun addToFavorite(teamId: String)
     }
 
 }

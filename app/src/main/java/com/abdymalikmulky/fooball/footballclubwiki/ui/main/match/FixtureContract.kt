@@ -18,6 +18,7 @@ interface FixtureContract {
     }
     interface Presenter : BasePresenter {
         fun loadEvent(isPast: Boolean, leagueId: String)
+        fun loadFavoriteEvent(leagueId: String)
     }
 
 }

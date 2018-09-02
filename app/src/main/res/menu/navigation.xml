@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+
     <item
         android:id="@+id/navigation_scores"
-        android:icon="@drawable/ic_trophy"
+        android:icon="@drawable/ic_soccer_peope"
         android:title="@string/title_scores" />
 
     <item
@@ -11,9 +12,10 @@
         android:icon="@drawable/ic_soccer_ball"
         android:title="@string/title_fixture" />
 
+
     <item
-        android:id="@+id/navigation_team_dir"
-        android:icon="@drawable/ic_soccer_field"
-        android:title="@string/title_directory_team" />
+        android:id="@+id/navigation_fav_match"
+        android:icon="@drawable/ic_goal"
+        android:title="@string/title_fav_match" />
 
 </menu>

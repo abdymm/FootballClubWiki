@@ -9,6 +9,7 @@ import com.abdymalikmulky.fooball.footballclubwiki.data.team.Team
 class TeamPresenter(footballRepo: FootballRepo, teamView: TeamContract.View) : TeamContract.Presenter {
 
 
+
     internal var teamView: TeamContract.View
     internal var footballRepo: FootballRepo
 
@@ -52,6 +53,10 @@ class TeamPresenter(footballRepo: FootballRepo, teamView: TeamContract.View) : T
             }
 
         })
+    }
+
+    override fun addToFavorite(teamId: String) {
+
     }
 
 

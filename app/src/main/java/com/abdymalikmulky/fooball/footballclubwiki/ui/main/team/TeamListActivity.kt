@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import com.abdymalikmulky.fooball.footballclubwiki.R
@@ -22,6 +24,7 @@ import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
 
 class TeamListActivity : AppCompatActivity(), TeamContract.View {
+
 
 
     //Presenter
@@ -98,7 +101,6 @@ class TeamListActivity : AppCompatActivity(), TeamContract.View {
             teamPresenter.loadTeam(choosedLeague.leagueId )
         }
     }
-
     private fun initPresenterRepo() {
         //Repo init
         footballRepo = FootballRepo(this)
@@ -144,6 +146,10 @@ class TeamListActivity : AppCompatActivity(), TeamContract.View {
         this.teams.clear()
         this.teams.addAll(teams)
         teamListTeamAdapter.notifyDataSetChanged()
+    }
+
+    override fun teamFavorited(teamId: String) {
+        
     }
 
     override fun setPresenter(presenter: TeamContract.Presenter) {

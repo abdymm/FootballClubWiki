@@ -13,11 +13,17 @@ interface FixtureDetailContract {
         fun showLoading()
         fun hideLoading()
 
+        fun showEventFav(isFavorite: Boolean)
         fun showTeam(team: Team)
         fun showFixture(event: Event)
+        fun showFavoriteMatchResponse(eventId: String)
     }
     interface Presenter : BasePresenter {
         fun loadTeam(teamId: String)
+
+        fun checkIsEventFavorited(eventId: String)
+
+        fun favoriteMatch(isFavorite: Boolean, eventId: String)
     }
 
 }

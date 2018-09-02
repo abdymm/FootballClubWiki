@@ -10,6 +10,7 @@ import com.abdymalikmulky.fooball.footballclubwiki.data.team.Team
 class FixtureDetailPresenter(footballRepo: FootballRepo, fixtureDetailView: FixtureDetailContract.View) : FixtureDetailContract.Presenter {
 
 
+
     internal var fixtureDetailView: FixtureDetailContract.View
     internal var footballRepo: FootballRepo
 
@@ -41,5 +42,30 @@ class FixtureDetailPresenter(footballRepo: FootballRepo, fixtureDetailView: Fixt
         })
     }
 
+    override fun favoriteMatch(isFavorite: Boolean, eventId: String) {
+        footballRepo.setFavoriteEvent(isFavorite, eventId, object : FootballDataSource.SetFavoriteEventCallback{
+            override fun onSavedEvent(eventId: String) {
+                fixtureDetailView.showFavoriteMatchResponse(eventId)
+            }
+
+            override fun onFailed(errorMsg: String) {
+                fixtureDetailView.showError(errorMsg)
+            }
+
+        })
+    }
+
+    override fun checkIsEventFavorited(eventId: String) {
+        footballRepo.isEventHasFavorited(eventId, object : FootballDataSource.IsEventFavLeagueCallback{
+            override fun onFavorited(isFav: Boolean) {
+                fixtureDetailView.showEventFav(isFav)
+            }
+
+            override fun onFailed(errorMsg: String) {
+                fixtureDetailView.showError(errorMsg)
+            }
+
+        })
+    }
 
 }

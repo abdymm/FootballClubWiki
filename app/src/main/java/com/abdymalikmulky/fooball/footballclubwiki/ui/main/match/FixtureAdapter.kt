@@ -11,6 +11,7 @@ import com.abdymalikmulky.fooball.footballclubwiki.R.id.team_badge
 import com.abdymalikmulky.fooball.footballclubwiki.R.id.team_name
 import com.abdymalikmulky.fooball.footballclubwiki.data.event.Event
 import com.abdymalikmulky.fooball.footballclubwiki.util.DateTimeUtil
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_event.view.*
 import org.jetbrains.anko.*
 import java.text.SimpleDateFormat
@@ -45,6 +46,9 @@ class FixtureAdapter(private val isPastEvent: Boolean,private val events: List<E
             } else {
                 itemView.list_event_time_status.text = "UPCOMING"
             }
+
+            Picasso.get().load(event.homeTeamBadge).into(itemView.list_event_home_badge)
+            Picasso.get().load(event.awayTeamBadge).into(itemView.list_event_away_badge)
 
 
 

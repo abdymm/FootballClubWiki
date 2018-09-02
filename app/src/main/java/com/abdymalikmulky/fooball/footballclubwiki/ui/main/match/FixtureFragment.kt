@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,7 @@ import org.jetbrains.anko.support.v4.*
 class FixtureFragment : Fragment(), FixtureContract.View {
 
     var isPastEvent = false
+    var isFavorite = 0
 
     //Presenter
     private lateinit var fixturePresenter: FixtureContract.Presenter
@@ -87,6 +89,13 @@ class FixtureFragment : Fragment(), FixtureContract.View {
             fragment.setArguments(args)
             return fragment
         }
+        fun newInstance(isFavorite: Int): FixtureFragment {
+            val fragment = FixtureFragment()
+            val args = Bundle()
+            args.putInt("IS_FAVORITE", isFavorite)
+            fragment.setArguments(args)
+            return fragment
+        }
 
     }
 
@@ -95,6 +104,10 @@ class FixtureFragment : Fragment(), FixtureContract.View {
         arguments?.getBoolean(getString(R.string.KEY_IS_PAST_EVENT))?.let {
             isPastEvent = it
         }
+        arguments?.getInt(getString(R.string.KEY_IS_FAVORITE))?.let {
+            isFavorite = it
+        }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -102,7 +115,7 @@ class FixtureFragment : Fragment(), FixtureContract.View {
 
         initPresenterRepo()
 
-        fixturePresenter.loadEvent(isPastEvent, "4328")
+        loadEvents()
 
         fixtureAdapter = FixtureAdapter(isPastEvent, events) {
 
@@ -111,7 +124,7 @@ class FixtureFragment : Fragment(), FixtureContract.View {
         }
         listFixture.adapter = fixtureAdapter
         swipeRefresh.onRefresh {
-            fixturePresenter.loadEvent(isPastEvent, "4328")
+            loadEvents()
         }
     }
 
@@ -134,6 +147,7 @@ class FixtureFragment : Fragment(), FixtureContract.View {
     }
 
     override fun showFixtureList(events: List<Event>) {
+        Log.d("DataEvent %s", events.toString())
         swipeRefresh.isRefreshing = false
         this.events.clear()
         this.events.addAll(events)
@@ -146,5 +160,13 @@ class FixtureFragment : Fragment(), FixtureContract.View {
 
     override fun showError(message: String) {
         toast(message)
+    }
+
+    internal fun loadEvents() {
+        if(isFavorite==1) {
+            fixturePresenter.loadFavoriteEvent(getString(R.string.league_id))
+        } else {
+            fixturePresenter.loadEvent(isPastEvent, getString(R.string.league_id))
+        }
     }
 }

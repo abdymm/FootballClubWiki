@@ -4,11 +4,28 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class Team (
+        @SerializedName("idTeam")
+        var teamId: String,
+
         @SerializedName("strTeam")
-        val teamName: String?,
+        var teamName: String?,
 
         @SerializedName("strDescriptionEN")
-        val teamDescription: String?,
+        var teamDescription: String?,
 
         @SerializedName("strTeamBadge")
-        val teamBadge: String?) : Serializable
+        var teamBadge: String) : Serializable {
+
+        constructor() : this("", "", "", "")
+
+
+        companion object {
+                const val TABLE: String = "TEAM"
+                const val ID: String = "ID_"
+                const val TEAM_ID: String = "TEAM_ID"
+                const val LEAGUE_ID: String = "LEAGUE_ID"
+                const val TEAM_NAME: String = "TEAM_NAME"
+                const val TEAM_BADGE: String = "TEAM_BADGE"
+                const val IS_FAVORITE: String = "IS_FAVORITE"
+        }
+}

@@ -1,6 +1,7 @@
 package com.abdymalikmulky.fooball.footballclubwiki.ui.main.team
 
 import android.support.v7.widget.RecyclerView
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -54,6 +55,7 @@ class TeamListAdapter(private val teams: List<Team>, private val listener: (Team
 
                     imageView {
                         id = R.id.team_badge
+                        alpha = 0.8.toFloat()
                     }.lparams{
                         height = dip(50)
                         width = dip(50)
@@ -65,7 +67,6 @@ class TeamListAdapter(private val teams: List<Team>, private val listener: (Team
                     }.lparams{
                         margin = dip(15)
                     }
-
                 }
             }
         }
