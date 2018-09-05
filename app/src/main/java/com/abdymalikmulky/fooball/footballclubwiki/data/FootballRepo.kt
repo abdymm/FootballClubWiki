@@ -30,7 +30,7 @@ class FootballRepo(context: Context) : FootballDataSource {
     override fun loadTeamLeague(leagueId: String, callback: FootballDataSource.LoadTeamsCallback) {
         footballRemote.loadTeamLeague(leagueId, object : FootballDataSource.LoadTeamsCallback {
             override fun onLoaded(teams: List<Team>) {
-                saveTeams(teams, leagueId)
+                //saveTeams(teams, leagueId)
                 callback.onLoaded(teams)
             }
 
@@ -56,6 +56,10 @@ class FootballRepo(context: Context) : FootballDataSource {
                 }
             })
         }
+    }
+
+    override fun setFavoriteLeague(leagueId: String, callback: FootballDataSource.SetFavoriteLeagueCallback) {
+        footballLocal.setFavoriteLeague(leagueId, callback)
     }
 
     override fun loadEventLeague(isPastEvenet: Boolean, leagueId: String, callback: FootballDataSource.LoadEventLeagueCallback) {

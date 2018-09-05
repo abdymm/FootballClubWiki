@@ -35,4 +35,6 @@
     <string name="KEY_IS_PAST_EVENT">IS_PAST_EVENT</string>
     <string name="KEY_IS_FAVORITE">IS_FAVORITE</string>
     <string name="league_id">4328</string>
+    <string name="teammates_sp">TEAMMATES_SP</string>
+    <string name="PREF_LEAGUE">PREF_LEAGUE</string>
 </resources>

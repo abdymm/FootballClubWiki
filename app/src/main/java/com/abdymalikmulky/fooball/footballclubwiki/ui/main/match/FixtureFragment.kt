@@ -19,6 +19,7 @@ import com.abdymalikmulky.fooball.footballclubwiki.data.FootballRepo
 import com.abdymalikmulky.fooball.footballclubwiki.data.event.Event
 import com.abdymalikmulky.fooball.footballclubwiki.ui.main.match.detail.FixtureDetailActivity
 import com.abdymalikmulky.fooball.footballclubwiki.ui.main.team.TeamDetailActivity
+import com.abdymalikmulky.fooball.footballclubwiki.util.SharedPreferenceUtil
 import com.abdymalikmulky.fooball.footballclubwiki.util.gone
 import com.abdymalikmulky.fooball.footballclubwiki.util.visible
 import org.jetbrains.anko.*
@@ -29,6 +30,8 @@ class FixtureFragment : Fragment(), FixtureContract.View {
 
     var isPastEvent = false
     var isFavorite = 0
+
+    private lateinit var sharedPreferenceUtil: SharedPreferenceUtil
 
     //Presenter
     private lateinit var fixturePresenter: FixtureContract.Presenter
@@ -113,6 +116,8 @@ class FixtureFragment : Fragment(), FixtureContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        sharedPreferenceUtil = SharedPreferenceUtil(activity?.applicationContext)
+
         initPresenterRepo()
 
         loadEvents()
@@ -163,10 +168,11 @@ class FixtureFragment : Fragment(), FixtureContract.View {
     }
 
     internal fun loadEvents() {
+        val leagueId = sharedPreferenceUtil.pref.getString(getString(R.string.PREF_LEAGUE), getString(R.string.league_id))
         if(isFavorite==1) {
-            fixturePresenter.loadFavoriteEvent(getString(R.string.league_id))
+            fixturePresenter.loadFavoriteEvent(leagueId)
         } else {
-            fixturePresenter.loadEvent(isPastEvent, getString(R.string.league_id))
+            fixturePresenter.loadEvent(isPastEvent, leagueId)
         }
     }
 }

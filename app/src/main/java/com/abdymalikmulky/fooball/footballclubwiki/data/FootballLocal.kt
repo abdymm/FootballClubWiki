@@ -4,13 +4,15 @@ package com.abdymalikmulky.fooball.footballclubwiki.data
 import android.content.Context
 import android.database.sqlite.SQLiteConstraintException
 import android.util.Log
+import com.abdymalikmulky.fooball.footballclubwiki.R
 import com.abdymalikmulky.fooball.footballclubwiki.data.event.Event
 import com.abdymalikmulky.fooball.footballclubwiki.data.team.Team
+import com.abdymalikmulky.fooball.footballclubwiki.util.SharedPreferenceUtil
 import org.jetbrains.anko.db.*
 
 class FootballLocal(context: Context) : FootballDataSource {
 
-
+    internal var sharedPreferenceUtil: SharedPreferenceUtil
 
     internal var context: Context
 
@@ -20,6 +22,7 @@ class FootballLocal(context: Context) : FootballDataSource {
     init {
         this.context = context
         this.database = DBHelper(context)
+        this.sharedPreferenceUtil = SharedPreferenceUtil(context)
     }
 
     override fun loadLeague(callback: FootballDataSource.LoadLeagueCallback) {
@@ -31,6 +34,12 @@ class FootballLocal(context: Context) : FootballDataSource {
     }
 
     override fun loadEventLeague(isPastEvent: Boolean, leagueId: String, callback: FootballDataSource.LoadEventLeagueCallback) {
+    }
+
+    override fun setFavoriteLeague(leagueId: String, callback: FootballDataSource.SetFavoriteLeagueCallback) {
+        sharedPreferenceUtil.editor.putString(context.getString(R.string.PREF_LEAGUE), leagueId)
+        sharedPreferenceUtil.editor.commit()
+        callback.onSet(leagueId)
     }
 
     override fun loadTeam(teamId: String, callback: FootballDataSource.LoadTeamCallback) {

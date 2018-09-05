@@ -16,6 +16,8 @@ class TeamPresenter(footballRepo: FootballRepo, teamView: TeamContract.View) : T
     init {
         this.teamView = teamView
         this.footballRepo = footballRepo
+
+        this.teamView.setPresenter(this)
     }
 
     override fun start() {
@@ -55,9 +57,20 @@ class TeamPresenter(footballRepo: FootballRepo, teamView: TeamContract.View) : T
         })
     }
 
-    override fun addToFavorite(teamId: String) {
-
+    override fun setFavoriteTeam(teamId: String) {
     }
 
+    override fun setFavoriteLeague(leagueId: String) {
+        footballRepo.setFavoriteLeague(leagueId, object : FootballDataSource.SetFavoriteLeagueCallback{
+            override fun onSet(leagueId: String) {
+                teamView.leagueFavorited(leagueId)
+            }
+
+            override fun onFailed(errorMsg: String) {
+                teamView.showError(errorMsg)
+            }
+
+        })
+    }
 
 }

@@ -24,8 +24,6 @@ import org.jetbrains.anko.support.v4.*
 
 class TeamListFragment : Fragment(), TeamContract.View {
 
-
-
     //Presenter
     private lateinit var teamPresenter: TeamContract.Presenter
 
@@ -90,7 +88,8 @@ class TeamListFragment : Fragment(), TeamContract.View {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, id: Long) {
                 if(spinnerLeague.selectedItem != null) {
                     choosedLeague = spinnerLeague.selectedItem as League
-                    loadTeamByLeagueId(choosedLeague.leagueId)
+
+                    teamPresenter.setFavoriteLeague(choosedLeague.leagueId)
                 }
             }
             override fun onNothingSelected(adapterView: AdapterView<*>) {
@@ -157,6 +156,10 @@ class TeamListFragment : Fragment(), TeamContract.View {
 
     override fun setPresenter(presenter: TeamContract.Presenter) {
         teamPresenter = presenter
+    }
+
+    override fun leagueFavorited(leagueId: String) {
+        loadTeamByLeagueId(leagueId)
     }
 
     override fun showError(message: String) {

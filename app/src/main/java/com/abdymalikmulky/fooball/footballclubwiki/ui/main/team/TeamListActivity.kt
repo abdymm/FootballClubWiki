@@ -2,6 +2,7 @@ package com.abdymalikmulky.fooball.footballclubwiki.ui.main.team
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.annotation.NonNull
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -24,9 +25,6 @@ import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
 
 class TeamListActivity : AppCompatActivity(), TeamContract.View {
-
-
-
     //Presenter
     private lateinit var teamPresenter: TeamContract.Presenter
 
@@ -38,7 +36,7 @@ class TeamListActivity : AppCompatActivity(), TeamContract.View {
     private var teams: MutableList<Team> = mutableListOf()
 
     private lateinit var spinnerLeague: Spinner
-    private lateinit var listTeam: RecyclerView
+    public lateinit var listTeam: RecyclerView
     private lateinit var teamListTeamAdapter: TeamListAdapter
     private lateinit var progressBar: ProgressBar
     private lateinit var swipeRefresh: SwipeRefreshLayout
@@ -68,6 +66,7 @@ class TeamListActivity : AppCompatActivity(), TeamContract.View {
                     lparams(width = matchParent, height = wrapContent)
 
                     listTeam = recyclerView {
+                        id = R.id.team_list
                         lparams(width = matchParent, height = wrapContent)
                         layoutManager = LinearLayoutManager(ctx)
                     }
@@ -86,7 +85,8 @@ class TeamListActivity : AppCompatActivity(), TeamContract.View {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, id: Long) {
                 if(spinnerLeague.selectedItem != null) {
                     choosedLeague = spinnerLeague.selectedItem as League
-                    loadTeamByLeagueId(choosedLeague.leagueId)
+
+                    teamPresenter.setFavoriteLeague(choosedLeague.leagueId)
                 }
             }
             override fun onNothingSelected(adapterView: AdapterView<*>) {
@@ -152,7 +152,11 @@ class TeamListActivity : AppCompatActivity(), TeamContract.View {
         
     }
 
-    override fun setPresenter(presenter: TeamContract.Presenter) {
+    override fun leagueFavorited(leagueId: String) {
+        loadTeamByLeagueId(leagueId)
+    }
+
+    override fun setPresenter(@NonNull presenter: TeamContract.Presenter) {
         teamPresenter = presenter
     }
 

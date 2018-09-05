@@ -1,5 +1,6 @@
 package com.abdymalikmulky.fooball.footballclubwiki.data
 
+import android.support.annotation.NonNull
 import com.abdymalikmulky.fooball.footballclubwiki.data.event.Event
 import com.abdymalikmulky.fooball.footballclubwiki.data.league.League
 import com.abdymalikmulky.fooball.footballclubwiki.data.team.Team
@@ -9,11 +10,13 @@ interface FootballDataSource {
 
     fun loadLeague(callback: LoadLeagueCallback)
 
-    fun loadTeamLeague(leagueId: String, callback: LoadTeamsCallback)
+    fun loadTeamLeague(@NonNull leagueId: String, @NonNull callback: LoadTeamsCallback)
 
     fun loadTeam(teamId: String, callback: LoadTeamCallback)
 
     fun setFavoriteTeam(favorite: Boolean, teamId: String, callback: SetFavoriteTeamCallback)
+
+    fun setFavoriteLeague(leagueId: String, callback: SetFavoriteLeagueCallback)
 
     fun loadEventLeague(isPastEvenet: Boolean, leagueId: String, callback: LoadEventLeagueCallback)
 
@@ -46,6 +49,11 @@ interface FootballDataSource {
     interface IsTeamExistCallback {
         fun onTeamExisted()
         fun onTeamNotExisted()
+    }
+
+    interface SetFavoriteLeagueCallback {
+        fun onSet(leagueId: String)
+        fun onFailed(errorMsg: String)
     }
 
     interface LoadEventLeagueCallback {

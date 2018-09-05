@@ -2,11 +2,14 @@ package com.abdymalikmulky.fooball.footballclubwiki.ui
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.abdymalikmulky.fooball.footballclubwiki.R
 import com.abdymalikmulky.fooball.footballclubwiki.data.FootballDataSource
 import com.abdymalikmulky.fooball.footballclubwiki.data.FootballRepo
 import com.abdymalikmulky.fooball.footballclubwiki.data.team.Team
 import com.abdymalikmulky.fooball.footballclubwiki.ui.main.MainActivity
+import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.experimental.launch
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 
@@ -25,7 +28,6 @@ class SplashActivity : AppCompatActivity() {
         footballRepo.loadTeamLeague(getString(R.string.league_id), object : FootballDataSource.LoadTeamsCallback{
             override fun onLoaded(teams: List<Team>) {
                 startSplash()
-
             }
 
             override fun onFailed(errorMsg: String) {
@@ -37,29 +39,11 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun startSplash() {
-        val splashTread: Thread
-        splashTread = object : Thread() {
-            override fun run() {
-                try {
-                    var waited = 0
-                    // Splash screen pause time
-                    while (waited < animationWaitingTime) {
-                        Thread.sleep(100)
-                        waited += 100
-                    }
-
-                    startActivity(intentFor<MainActivity>())
-
-                } catch (e: InterruptedException) {
-                    // do nothing
-                } finally {
-                    finish()
-                }
-
-            }
+        launch {
+            delay(animationWaitingTime)
+            startActivity(intentFor<MainActivity>())
+            finishAffinity()
         }
-        splashTread.start()
-
     }
 
     companion object {
