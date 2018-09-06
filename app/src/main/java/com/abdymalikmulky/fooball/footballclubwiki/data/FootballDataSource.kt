@@ -18,7 +18,7 @@ interface FootballDataSource {
 
     fun setFavoriteLeague(leagueId: String, callback: SetFavoriteLeagueCallback)
 
-    fun loadEventLeague(isPastEvenet: Boolean, leagueId: String, callback: LoadEventLeagueCallback)
+    fun loadEventLeague(@NonNull isPastEvenet: Boolean, @NonNull leagueId: String,@NonNull  callback: LoadEventLeagueCallback)
 
     fun setFavoriteEvent(favorite: Boolean, eventId: String, callback: SetFavoriteEventCallback)
 

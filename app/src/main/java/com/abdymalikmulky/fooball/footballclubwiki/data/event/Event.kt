@@ -71,6 +71,8 @@ data class Event(
         @SerializedName("strAwayLineupSubstitutes")
         val awayLineUpSUB: String) : Serializable {
 
+        constructor() : this("", "", "", "", "", "", "", "", "", 0, 0, "", "", "", "", "", "", "", "", "", "", "", "")
+
         companion object {
                 const val TABLE: String = "EVENT_FAV"
                 const val ID: String = "ID_"

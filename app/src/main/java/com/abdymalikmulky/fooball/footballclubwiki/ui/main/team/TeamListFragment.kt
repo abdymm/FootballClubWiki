@@ -52,7 +52,9 @@ class TeamListFragment : Fragment(), TeamContract.View {
                 leftPadding = dip(padding)
                 rightPadding = dip(padding)
 
-                spinnerLeague = spinner()
+                spinnerLeague = spinner{
+                    id = R.id.league_spinner
+                }
 
                 swipeRefresh = swipeRefreshLayout {
                     setColorSchemeResources(R.color.colorAccent,
@@ -64,6 +66,7 @@ class TeamListFragment : Fragment(), TeamContract.View {
                         lparams(width = matchParent, height = wrapContent)
 
                         listTeam = recyclerView {
+                            id = R.id.team_list
                             lparams(width = matchParent, height = wrapContent)
                             layoutManager = LinearLayoutManager(ctx)
                         }

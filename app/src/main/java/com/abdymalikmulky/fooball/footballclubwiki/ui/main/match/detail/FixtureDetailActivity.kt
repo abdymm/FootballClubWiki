@@ -194,8 +194,12 @@ class FixtureDetailActivity : AppCompatActivity(), FixtureDetailContract.View {
         return lineUpList
     }
 
-    override fun showFavoriteMatchResponse(eventId: String) {
-        toast("Match saved!")
+    override fun showFavoriteMatchResponse(isFavorite: Boolean, eventId: String) {
+        if(isFavorite) {
+            toast(getString(R.string.message_match_saved))
+        } else {
+            toast(getString(R.string.message_match_unsaved))
+        }
     }
 
     override fun showEventFav(isFavorite: Boolean) {

@@ -69,6 +69,7 @@ class FixtureFragment : Fragment(), FixtureContract.View {
                         lparams(width = matchParent, height = wrapContent)
 
                         listFixture = recyclerView {
+                            id = R.id.event_list
                             lparams(width = matchParent, height = wrapContent)
                             layoutManager = LinearLayoutManager(ctx)
                         }

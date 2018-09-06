@@ -16,7 +16,7 @@ interface FixtureDetailContract {
         fun showEventFav(isFavorite: Boolean)
         fun showTeam(team: Team)
         fun showFixture(event: Event)
-        fun showFavoriteMatchResponse(eventId: String)
+        fun showFavoriteMatchResponse(isFavorite: Boolean, eventId: String)
     }
     interface Presenter : BasePresenter {
         fun loadTeam(teamId: String)

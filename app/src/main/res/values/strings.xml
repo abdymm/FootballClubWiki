@@ -37,4 +37,7 @@
     <string name="league_id">4328</string>
     <string name="teammates_sp">TEAMMATES_SP</string>
     <string name="PREF_LEAGUE">PREF_LEAGUE</string>
+    <string name="menu_team">Change League (Team)</string>
+    <string name="message_match_saved">Match saved!</string>
+    <string name="message_match_unsaved">Match unsaved!</string>
 </resources>

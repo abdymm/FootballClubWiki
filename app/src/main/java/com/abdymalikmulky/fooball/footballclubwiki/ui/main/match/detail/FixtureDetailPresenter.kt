@@ -45,7 +45,7 @@ class FixtureDetailPresenter(footballRepo: FootballRepo, fixtureDetailView: Fixt
     override fun favoriteMatch(isFavorite: Boolean, eventId: String) {
         footballRepo.setFavoriteEvent(isFavorite, eventId, object : FootballDataSource.SetFavoriteEventCallback{
             override fun onSavedEvent(eventId: String) {
-                fixtureDetailView.showFavoriteMatchResponse(eventId)
+                fixtureDetailView.showFavoriteMatchResponse(isFavorite, eventId)
             }
 
             override fun onFailed(errorMsg: String) {

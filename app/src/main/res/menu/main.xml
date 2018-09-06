@@ -6,7 +6,7 @@
         android:id="@+id/menu_team"
         android:icon="@drawable/ic_trophy"
         android:iconTint="#fff"
-        android:title="Team"
+        android:title="@string/menu_team"
         app:showAsAction="never"
         android:visible="true"/>
 

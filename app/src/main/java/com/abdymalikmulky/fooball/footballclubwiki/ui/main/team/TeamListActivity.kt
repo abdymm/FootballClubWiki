@@ -54,7 +54,9 @@ class TeamListActivity : AppCompatActivity(), TeamContract.View {
             leftPadding = dip(padding)
             rightPadding = dip(padding)
 
-            spinnerLeague = spinner()
+            spinnerLeague = spinner{
+                id = R.id.league_spinner
+            }
 
             swipeRefresh = swipeRefreshLayout {
                 setColorSchemeResources(colorAccent,

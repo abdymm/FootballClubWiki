@@ -47,16 +47,16 @@ class FixtureAdapter(private val isPastEvent: Boolean,private val events: List<E
                 itemView.list_event_time_status.text = "UPCOMING"
             }
 
-            if(!event.homeTeamBadge.isEmpty()) {
+            //if(!event.homeTeamBadge.isEmpty()) {
                 Picasso.get().load(event.homeTeamBadge)
                         .error(R.drawable.badge_dumm)
                         .into(itemView.list_event_home_badge)
-            }
-            if(!event.awayTeamBadge.isEmpty()) {
+            //}
+            //if(!event.awayTeamBadge.isEmpty()) {
                 Picasso.get().load(event.awayTeamBadge)
                         .error(R.drawable.badge_dumm)
                         .into(itemView.list_event_away_badge)
-            }
+            //}
 
 
 

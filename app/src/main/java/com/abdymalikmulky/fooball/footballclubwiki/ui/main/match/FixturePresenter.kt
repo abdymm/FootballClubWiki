@@ -15,6 +15,8 @@ class FixturePresenter(footballRepo: FootballRepo, fixtureView: FixtureContract.
     init {
         this.fixtureView = fixtureView
         this.footballRepo = footballRepo
+
+        this.fixtureView.setPresenter(this)
     }
 
     override fun start() {

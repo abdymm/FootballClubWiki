@@ -31,10 +31,11 @@ class MainActivity : AppCompatActivity() {
         val fixtureFragment = FixtureFragment.newInstance(true)
         openFragment(fixtureFragment)
 
+        /*
         async(UI) {
             delay(1000)
             toast("hai")
-        }
+        }*/
 
     }
 
@@ -51,15 +52,15 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_fav_match -> {
-                val teamFragment = FixtureFragment.newInstance(1)
-                openFragment(teamFragment)
+                val fixtureFragment = FixtureFragment.newInstance(1)
+                openFragment(fixtureFragment)
                 return@OnNavigationItemSelectedListener true
             }
         }
         false
     }
 
-    private fun openFragment(fragment: Fragment) {
+    fun openFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container, fragment)
         transaction.addToBackStack(null)
