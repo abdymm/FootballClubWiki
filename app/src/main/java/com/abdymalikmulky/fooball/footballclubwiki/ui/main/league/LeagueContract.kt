@@ -1,4 +1,4 @@
-package com.abdymalikmulky.fooball.footballclubwiki.ui.main.team
+package com.abdymalikmulky.fooball.footballclubwiki.ui.main.league
 
 import com.abdymalikmulky.fooball.footballclubwiki.data.league.League
 import com.abdymalikmulky.fooball.footballclubwiki.data.team.Team
@@ -6,21 +6,20 @@ import com.polri.sipp.app.ui.BasePresenter
 import com.polri.sipp.app.ui.BaseView
 
 
-interface TeamContract {
+interface LeagueContract {
 
     interface View : BaseView<Presenter> {
         fun showLoading()
         fun hideLoading()
 
-        fun showTeamList(teams: List<Team>)
+        fun showLeagueList(leagues: List<League>)
 
-        fun teamFavorited(teamId: String)
-
+        fun showTeamPage(leagueId: String)
     }
     interface Presenter : BasePresenter {
-        fun loadTeam(leagueId: String)
+        fun loadLeague()
 
-        fun setFavoriteTeam(teamId: String)
+        fun setFavoriteLeague(leagueId: String)
     }
 
 }

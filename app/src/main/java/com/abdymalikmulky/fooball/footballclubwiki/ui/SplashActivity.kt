@@ -8,6 +8,7 @@ import com.abdymalikmulky.fooball.footballclubwiki.data.FootballDataSource
 import com.abdymalikmulky.fooball.footballclubwiki.data.FootballRepo
 import com.abdymalikmulky.fooball.footballclubwiki.data.team.Team
 import com.abdymalikmulky.fooball.footballclubwiki.ui.main.MainActivity
+import com.abdymalikmulky.fooball.footballclubwiki.ui.main.team.TeamListActivity
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.launch
 import org.jetbrains.anko.intentFor
@@ -17,6 +18,8 @@ class SplashActivity : AppCompatActivity() {
 
     internal lateinit var footballRepo: FootballRepo
 
+    internal lateinit var leagueId: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
@@ -25,25 +28,34 @@ class SplashActivity : AppCompatActivity() {
 
         footballRepo = FootballRepo(this)
 
-        footballRepo.loadTeamLeague(getString(R.string.league_id), object : FootballDataSource.LoadTeamsCallback{
-            override fun onLoaded(teams: List<Team>) {
-                startSplash()
+        footballRepo.loadFavoriteLeague(object : FootballDataSource.LoadFavoriteLeagueCallback{
+            override fun onLoad(leagueId: String) {
+                setLeagueId(leagueId)
             }
 
             override fun onFailed(errorMsg: String) {
                 toast(errorMsg)
                 finishAffinity()
             }
-
         })
     }
 
-    private fun startSplash() {
+    private fun startSplash(leagueId: String) {
         launch {
             delay(animationWaitingTime)
-            startActivity(intentFor<MainActivity>())
+            if(leagueId.equals("")) {
+                startActivity(intentFor<TeamListActivity>())
+            } else {
+                startActivity(intentFor<MainActivity>())
+            }
+
             finishAffinity()
         }
+    }
+
+    fun setLeagueId(leagueId: String) {
+        this.leagueId = leagueId
+        startSplash(leagueId)
     }
 
     companion object {

@@ -2,7 +2,6 @@ package com.abdymalikmulky.fooball.footballclubwiki.data
 
 
 import android.content.Context
-import android.util.Log
 import com.abdymalikmulky.fooball.footballclubwiki.data.event.Event
 import com.abdymalikmulky.fooball.footballclubwiki.data.team.Team
 
@@ -60,6 +59,10 @@ class FootballRepo(context: Context) : FootballDataSource {
 
     override fun setFavoriteLeague(leagueId: String, callback: FootballDataSource.SetFavoriteLeagueCallback) {
         footballLocal.setFavoriteLeague(leagueId, callback)
+    }
+
+    override fun loadFavoriteLeague(callback: FootballDataSource.LoadFavoriteLeagueCallback) {
+        footballLocal.loadFavoriteLeague(callback)
     }
 
     override fun loadEventLeague(isPastEvenet: Boolean, leagueId: String, callback: FootballDataSource.LoadEventLeagueCallback) {

@@ -16,6 +16,7 @@ import retrofit2.Response
 
 class FootballRemote(context: Context) : FootballDataSource {
 
+
     internal var context: Context
 
     internal var footballApi: FootballApi
@@ -92,6 +93,9 @@ class FootballRemote(context: Context) : FootballDataSource {
     }
 
     override fun setFavoriteTeam(favorite: Boolean, teamId: String, callback: FootballDataSource.SetFavoriteTeamCallback) {
+        //maybe next store in rmeote server
+    }
+    override fun loadFavoriteLeague(callback: FootballDataSource.LoadFavoriteLeagueCallback) {
         //maybe next store in rmeote server
     }
 

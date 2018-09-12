@@ -12,6 +12,7 @@ import org.jetbrains.anko.db.*
 
 class FootballLocal(context: Context) : FootballDataSource {
 
+
     internal var sharedPreferenceUtil: SharedPreferenceUtil
 
     internal var context: Context
@@ -40,6 +41,10 @@ class FootballLocal(context: Context) : FootballDataSource {
         sharedPreferenceUtil.editor.putString(context.getString(R.string.PREF_LEAGUE), leagueId)
         sharedPreferenceUtil.editor.commit()
         callback.onSet(leagueId)
+    }
+    override fun loadFavoriteLeague(callback: FootballDataSource.LoadFavoriteLeagueCallback) {
+        val leagueId = sharedPreferenceUtil.pref.getString(context.getString(R.string.PREF_LEAGUE), "")
+        callback.onLoad(leagueId)
     }
 
     override fun loadTeam(teamId: String, callback: FootballDataSource.LoadTeamCallback) {

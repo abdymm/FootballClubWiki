@@ -1,11 +1,9 @@
-package com.abdymalikmulky.fooball.footballclubwiki.ui.main.team
+package com.abdymalikmulky.fooball.footballclubwiki.ui.main.league
 
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -17,47 +15,34 @@ import com.abdymalikmulky.fooball.footballclubwiki.R
 import com.abdymalikmulky.fooball.footballclubwiki.data.FootballRepo
 import com.abdymalikmulky.fooball.footballclubwiki.data.league.League
 import com.abdymalikmulky.fooball.footballclubwiki.data.team.Team
-import com.abdymalikmulky.fooball.footballclubwiki.ui.main.MainActivity
 import com.abdymalikmulky.fooball.footballclubwiki.util.gone
 import com.abdymalikmulky.fooball.footballclubwiki.util.visible
 import org.jetbrains.anko.*
-import org.jetbrains.anko.cardview.v7.cardView
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.*
+import android.support.v7.widget.DividerItemDecoration
+import android.util.TypedValue
+import com.abdymalikmulky.fooball.footballclubwiki.ui.main.team.TeamListFragment
+import com.abdymalikmulky.fooball.footballclubwiki.util.openFragment
+import org.jetbrains.anko.cardview.v7.cardView
 
-class TeamListFragment : Fragment(), TeamContract.View {
+
+class LeagueListFragment : Fragment(), LeagueContract.View {
+
 
     //Presenter
-    private lateinit var teamPresenter: TeamContract.Presenter
+    private lateinit var leaguePresenter: LeagueContract.Presenter
 
     //Repo
     private lateinit var footballRepo: FootballRepo
 
+    private var leagues: MutableList<League> = mutableListOf()
 
-    private lateinit var leagueId: String
-    private var teams: MutableList<Team> = mutableListOf()
-
-    private lateinit var listTeam: RecyclerView
-    private lateinit var teamListTeamAdapter: TeamListAdapter
+    private lateinit var listLeague: RecyclerView
+    private lateinit var leagueListAdapter: LeagueListAdapter
     private lateinit var progressBar: ProgressBar
     private lateinit var swipeRefresh: SwipeRefreshLayout
 
-    companion object {
-        fun newInstance(leagueId: String): TeamListFragment {
-            val fragment = TeamListFragment()
-            val args = Bundle()
-            args.putString("LEAGUE_ID", leagueId)
-            fragment.setArguments(args)
-            return fragment
-        }
-    }
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        arguments?.getString(getString(R.string.KEY_LEAGUE_ID))?.let {
-            leagueId = it
-        }
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -78,17 +63,20 @@ class TeamListFragment : Fragment(), TeamContract.View {
                             android.R.color.holo_green_light,
                             android.R.color.holo_orange_light,
                             android.R.color.holo_red_light)
-
                     cardView {
                         lparams(width = matchParent, height = wrapContent)
 
                         relativeLayout {
                             lparams(width = matchParent, height = wrapContent)
 
-                            listTeam = recyclerView {
-                                id = R.id.team_list
+                            listLeague = recyclerView {
+                                id = R.id.league_list
                                 lparams(width = matchParent, height = wrapContent)
                                 layoutManager = LinearLayoutManager(ctx)
+
+                                val outValue = TypedValue()
+                                context!!.theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true)
+                                backgroundResource = outValue.resourceId
                             }
 
                             progressBar = progressBar {}.lparams {
@@ -106,19 +94,25 @@ class TeamListFragment : Fragment(), TeamContract.View {
         super.onViewCreated(view, savedInstanceState)
         initPresenterRepo()
 
-        loadTeamByLeagueId(leagueId)
+        leaguePresenter.loadLeague()
 
-        teamListTeamAdapter = TeamListAdapter(teams) {
-            teamPresenter.setFavoriteTeam(it.teamId)
+
+        leagueListAdapter = LeagueListAdapter(leagues) {
+
+            leaguePresenter.setFavoriteLeague(it.leagueId)
+            showTeamPage(leagueId = it.leagueId)
+
         }
-        listTeam.adapter = teamListTeamAdapter
-        listTeam.addItemDecoration(DividerItemDecoration(listTeam.getContext(), DividerItemDecoration.VERTICAL))
+        listLeague.adapter = leagueListAdapter
+        listLeague.addItemDecoration(DividerItemDecoration(listLeague.getContext(), DividerItemDecoration.VERTICAL))
         swipeRefresh.onRefresh {
-            teamPresenter.loadTeam(leagueId)
+            leaguePresenter.loadLeague()
         }
     }
 
-
+    companion object {
+        fun newInstance(): LeagueListFragment = LeagueListFragment()
+    }
 
 
 
@@ -127,43 +121,41 @@ class TeamListFragment : Fragment(), TeamContract.View {
         footballRepo = FootballRepo(activity!!.applicationContext)
 
         //Presenter init
-        teamPresenter = TeamPresenter(footballRepo, this)
+        leaguePresenter = LeaguePresenter(footballRepo, this)
     }
 
-
-    private fun loadTeamByLeagueId(leagueId: String) {
-        teamPresenter.loadTeam(leagueId)
-    }
 
     override fun showLoading() {
         progressBar.visible()
-        listTeam.gone()
+        listLeague.gone()
     }
 
     override fun hideLoading() {
         progressBar.gone()
-        listTeam.visible()
+        listLeague.visible()
     }
 
-    override fun showTeamList(teams: List<Team>) {
+    override fun showLeagueList(leagues: List<League>) {
         swipeRefresh.isRefreshing = false
-        this.teams.clear()
-        this.teams.addAll(teams)
-        teamListTeamAdapter.notifyDataSetChanged()
+        this.leagues.clear()
+        this.leagues.addAll(leagues)
+        leagueListAdapter.notifyDataSetChanged()
     }
 
-    override fun teamFavorited(teamId: String) {
-        toast(teamId)
-        startActivity(intentFor<MainActivity>())
+    override fun showTeamPage(leagueId: String) {
+        //openfragment team
+        val teamFragment = TeamListFragment.newInstance(leagueId)
+        openFragment(this.activity, teamFragment, R.id.content_team_league)
     }
 
-    override fun setPresenter(presenter: TeamContract.Presenter) {
-        teamPresenter = presenter
+    override fun setPresenter(presenter: LeagueContract.Presenter) {
+        leaguePresenter = presenter
     }
 
 
     override fun showError(message: String) {
         toast(message)
     }
+
 }
 

@@ -18,6 +18,8 @@ interface FootballDataSource {
 
     fun setFavoriteLeague(leagueId: String, callback: SetFavoriteLeagueCallback)
 
+    fun loadFavoriteLeague(callback: LoadFavoriteLeagueCallback)
+
     fun loadEventLeague(@NonNull isPastEvenet: Boolean, @NonNull leagueId: String,@NonNull  callback: LoadEventLeagueCallback)
 
     fun setFavoriteEvent(favorite: Boolean, eventId: String, callback: SetFavoriteEventCallback)
@@ -53,6 +55,11 @@ interface FootballDataSource {
 
     interface SetFavoriteLeagueCallback {
         fun onSet(leagueId: String)
+        fun onFailed(errorMsg: String)
+    }
+
+    interface LoadFavoriteLeagueCallback {
+        fun onLoad(leagueId: String)
         fun onFailed(errorMsg: String)
     }
 

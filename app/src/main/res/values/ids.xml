@@ -4,7 +4,11 @@
     <item name="team_name" type="id" />
     <item name="team_fav" type="id" />
     <item name="team_list" type="id" />
+
+    <item name="league_list" type="id" />
     <item name="league_spinner" type="id" />
+    <item name="league_name" type="id" />
+
     <item name="event_list" type="id" />
     <item name="event_list2" type="id" />
 </resources>

@@ -4,6 +4,7 @@ import com.abdymalikmulky.fooball.footballclubwiki.data.FootballDataSource
 import com.abdymalikmulky.fooball.footballclubwiki.data.FootballRepo
 import com.abdymalikmulky.fooball.footballclubwiki.data.league.League
 import com.abdymalikmulky.fooball.footballclubwiki.data.team.Team
+import org.jetbrains.anko.toast
 
 
 class TeamPresenter(footballRepo: FootballRepo, teamView: TeamContract.View) : TeamContract.Presenter {
@@ -26,21 +27,6 @@ class TeamPresenter(footballRepo: FootballRepo, teamView: TeamContract.View) : T
     override fun stop() {
     }
 
-    override fun loadLeague() {
-        teamView.showLoading()
-        footballRepo.loadLeague(object : FootballDataSource.LoadLeagueCallback {
-            override fun onLoaded(leagues: List<League>) {
-                teamView.hideLoading()
-                teamView.showLeagueList(leagues)
-            }
-
-            override fun onFailed(errorMsg: String) {
-                teamView.hideLoading()
-                teamView.showError(errorMsg)
-            }
-
-        })
-    }
 
     override fun loadTeam(leagueId: String) {
         teamView.showLoading()
@@ -58,12 +44,9 @@ class TeamPresenter(footballRepo: FootballRepo, teamView: TeamContract.View) : T
     }
 
     override fun setFavoriteTeam(teamId: String) {
-    }
-
-    override fun setFavoriteLeague(leagueId: String) {
-        footballRepo.setFavoriteLeague(leagueId, object : FootballDataSource.SetFavoriteLeagueCallback{
-            override fun onSet(leagueId: String) {
-                teamView.leagueFavorited(leagueId)
+        footballRepo.setFavoriteTeam(true, teamId, object: FootballDataSource.SetFavoriteTeamCallback{
+            override fun onSavedTeam(teamId: String) {
+                teamView.teamFavorited(teamId)
             }
 
             override fun onFailed(errorMsg: String) {

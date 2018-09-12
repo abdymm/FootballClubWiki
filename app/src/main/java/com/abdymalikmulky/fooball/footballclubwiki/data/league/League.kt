@@ -7,9 +7,7 @@ data class League (
         val leagueId: String,
 
         @SerializedName("strLeague")
-        val leagueName: String) {
+        val leagueName: String,
 
-        override fun toString(): String {
-                return leagueName
-        }
-}
+        @SerializedName("strSport")
+        val sportType: String)

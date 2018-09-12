@@ -8,12 +8,15 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.abdymalikmulky.fooball.footballclubwiki.R
+import com.abdymalikmulky.fooball.footballclubwiki.ui.main.league.LeagueListFragment
 import com.abdymalikmulky.fooball.footballclubwiki.ui.main.match.FixtureFragment
+import com.abdymalikmulky.fooball.footballclubwiki.ui.main.team.TeamListActivity
 import com.abdymalikmulky.fooball.footballclubwiki.ui.main.team.TeamListFragment
 import kotlinx.android.synthetic.main.activity_main_bottom.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.delay
+import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity() {
@@ -76,8 +79,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.getItemId()) {
             R.id.menu_team -> {
-                val teamFragment = TeamListFragment.newInstance()
-                openFragment(teamFragment)
+                startActivity(intentFor<TeamListActivity>())
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
