@@ -2,20 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <item
-        android:id="@+id/navigation_scores"
-        android:icon="@drawable/ic_soccer_peope"
-        android:title="@string/title_scores" />
 
     <item
         android:id="@+id/navigation_fixture"
         android:icon="@drawable/ic_soccer_ball"
         android:title="@string/title_fixture" />
 
+    <item
+        android:id="@+id/navigation_league"
+        android:icon="@drawable/ic_soccer_field"
+        android:title="@string/title_leagues" />
+
 
     <item
         android:id="@+id/navigation_fav_match"
-        android:icon="@drawable/ic_goal"
+        android:icon="@drawable/ic_trophy"
         android:title="@string/title_fav_match" />
 
 </menu>

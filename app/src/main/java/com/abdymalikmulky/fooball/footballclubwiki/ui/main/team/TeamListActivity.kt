@@ -16,7 +16,7 @@ class TeamListActivity : AppCompatActivity(){
         setContentView(R.layout.activity_team_league)
 
         val leagueFragment = LeagueListFragment.newInstance()
-        openFragment(this, leagueFragment, R.id.content_team_league)
+        openFragment(this, leagueFragment, R.id.container)
 
     }
 

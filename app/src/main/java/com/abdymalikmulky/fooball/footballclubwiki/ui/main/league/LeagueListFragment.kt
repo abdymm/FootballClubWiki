@@ -145,7 +145,7 @@ class LeagueListFragment : Fragment(), LeagueContract.View {
     override fun showTeamPage(leagueId: String) {
         //openfragment team
         val teamFragment = TeamListFragment.newInstance(leagueId)
-        openFragment(this.activity, teamFragment, R.id.content_team_league)
+        openFragment(this.activity, teamFragment, R.id.container)
     }
 
     override fun setPresenter(presenter: LeagueContract.Presenter) {

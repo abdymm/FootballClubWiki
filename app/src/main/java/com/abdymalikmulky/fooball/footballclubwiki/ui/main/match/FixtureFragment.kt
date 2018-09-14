@@ -4,6 +4,7 @@ package com.abdymalikmulky.fooball.footballclubwiki.ui.main.match
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -25,6 +26,10 @@ import com.abdymalikmulky.fooball.footballclubwiki.util.visible
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.*
+import android.util.TypedValue
+import android.widget.Button
+import org.jetbrains.anko.sdk25.coroutines.onClick
+
 
 class FixtureFragment : Fragment(), FixtureContract.View {
 
@@ -46,6 +51,9 @@ class FixtureFragment : Fragment(), FixtureContract.View {
     private lateinit var progressBar: ProgressBar
     private lateinit var swipeRefresh: SwipeRefreshLayout
 
+    private lateinit var nextButton: Button
+    private lateinit var pastButton: Button
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -58,6 +66,47 @@ class FixtureFragment : Fragment(), FixtureContract.View {
                 leftPadding = dip(padding)
                 rightPadding = dip(padding)
                 bottomPadding = dip(60)
+
+                linearLayout {
+                    lparams(width = matchParent, height = wrapContent) {
+                        bottomMargin = dip(8)
+                    }
+                    orientation = LinearLayout.HORIZONTAL
+
+                    pastButton = button {
+                        isClickable = true
+                        text = "PAST"
+                        background = ContextCompat.getDrawable(activity!!.applicationContext, R.drawable.background_ripple)
+                        textColor = resources.getColor(R.color.colorPrimary, null)
+                        onClick {
+                            textColor = resources.getColor(R.color.colorPrimary, null)
+                            nextButton.textColor = resources.getColor(R.color.colorButtonText, null)
+
+                            isPastEvent = true
+                            loadEvents(isPastEvent)
+                        }
+                    }.lparams(width = wrapContent, height = wrapContent, weight = 0.5f) {
+                        rightMargin = dip(8)
+                    }
+
+                    nextButton = button {
+                        isClickable = true
+                        text = "NEXT"
+                        background = ContextCompat.getDrawable(activity!!.applicationContext, R.drawable.background_ripple)
+                        textColor = resources.getColor(R.color.colorButtonText, null)
+                        onClick {
+                            textColor = resources.getColor(R.color.colorPrimary, null)
+                            pastButton.textColor = resources.getColor(R.color.colorButtonText, null)
+
+                            isPastEvent = false
+                            loadEvents(isPastEvent)
+                        }
+                    }.lparams(width = wrapContent, height = wrapContent, weight = 0.5f) {
+                        leftMargin = dip(8)
+                    }
+
+
+                }
 
                 swipeRefresh = swipeRefreshLayout {
                     setColorSchemeResources(R.color.colorAccent,
@@ -86,11 +135,8 @@ class FixtureFragment : Fragment(), FixtureContract.View {
 
     companion object {
 
-        fun newInstance(isPastEvent: Boolean): FixtureFragment {
+        fun newInstance(): FixtureFragment {
             val fragment = FixtureFragment()
-            val args = Bundle()
-            args.putBoolean("IS_PAST_EVENT", isPastEvent)
-            fragment.setArguments(args)
             return fragment
         }
         fun newInstance(isFavorite: Int): FixtureFragment {
@@ -105,9 +151,6 @@ class FixtureFragment : Fragment(), FixtureContract.View {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        arguments?.getBoolean(getString(R.string.KEY_IS_PAST_EVENT))?.let {
-            isPastEvent = it
-        }
         arguments?.getInt(getString(R.string.KEY_IS_FAVORITE))?.let {
             isFavorite = it
         }
@@ -121,7 +164,7 @@ class FixtureFragment : Fragment(), FixtureContract.View {
 
         initPresenterRepo()
 
-        loadEvents()
+        loadEvents(isPastEvent)
 
         fixtureAdapter = FixtureAdapter(isPastEvent, events) {
 
@@ -130,7 +173,7 @@ class FixtureFragment : Fragment(), FixtureContract.View {
         }
         listFixture.adapter = fixtureAdapter
         swipeRefresh.onRefresh {
-            loadEvents()
+            loadEvents(isPastEvent)
         }
     }
 
@@ -168,7 +211,7 @@ class FixtureFragment : Fragment(), FixtureContract.View {
         toast(message)
     }
 
-    internal fun loadEvents() {
+    internal fun loadEvents(isPastEvent: Boolean) {
         val leagueId = sharedPreferenceUtil.pref.getString(getString(R.string.PREF_LEAGUE), getString(R.string.league_id))
         if(isFavorite==1) {
             fixturePresenter.loadFavoriteEvent(leagueId)

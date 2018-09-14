@@ -31,29 +31,25 @@ class MainActivity : AppCompatActivity() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
 
-        val fixtureFragment = FixtureFragment.newInstance(true)
+        val fixtureFragment = FixtureFragment.newInstance()
         openFragment(fixtureFragment)
-
-        /*
-        async(UI) {
-            delay(1000)
-            toast("hai")
-        }*/
 
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.navigation_scores -> {
-                val fixtureFragment = FixtureFragment.newInstance(true)
-                openFragment(fixtureFragment)
-                return@OnNavigationItemSelectedListener true
-            }
             R.id.navigation_fixture -> {
-                val fixtureFragment = FixtureFragment.newInstance(false)
+                val fixtureFragment = FixtureFragment.newInstance()
                 openFragment(fixtureFragment)
                 return@OnNavigationItemSelectedListener true
             }
+
+            R.id.navigation_league -> {
+                val leagueFragment = LeagueListFragment.newInstance()
+                openFragment(leagueFragment)
+                return@OnNavigationItemSelectedListener true
+            }
+
             R.id.navigation_fav_match -> {
                 val fixtureFragment = FixtureFragment.newInstance(1)
                 openFragment(fixtureFragment)
