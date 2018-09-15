@@ -51,8 +51,6 @@ class TeamDetailActivity : AppCompatActivity(), TeamDetailContract.View {
 
         team = intent.extras.get(getString(R.string.EXTRA_TEAM)) as Team
 
-        initTab()
-
         app_bar.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
             if(Math.abs(verticalOffset) > 200) {
                 expandedActionBar = false
@@ -79,7 +77,7 @@ class TeamDetailActivity : AppCompatActivity(), TeamDetailContract.View {
         }
     }
 
-    private fun initTab() {
+    private fun initTab(team: Team) {
         teamPagerAdapter = TeamPagerAdapter(team, supportFragmentManager)
         view_pager.adapter = teamPagerAdapter
         tab_layout.setupWithViewPager(view_pager)
@@ -136,6 +134,8 @@ class TeamDetailActivity : AppCompatActivity(), TeamDetailContract.View {
 
     override fun showTeam(team: Team) {
         this.team = team
+
+        initTab(team)
         renderTeamData(team)
     }
 
