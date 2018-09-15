@@ -3,6 +3,7 @@ package com.abdymalikmulky.fooball.footballclubwiki.data
 import android.support.annotation.NonNull
 import com.abdymalikmulky.fooball.footballclubwiki.data.event.Event
 import com.abdymalikmulky.fooball.footballclubwiki.data.league.League
+import com.abdymalikmulky.fooball.footballclubwiki.data.player.Player
 import com.abdymalikmulky.fooball.footballclubwiki.data.team.Team
 
 
@@ -14,7 +15,11 @@ interface FootballDataSource {
 
     fun loadTeam(teamId: String, callback: LoadTeamCallback)
 
+    fun loadPlayersByTeam(teamId: String, callback: LoadPlayersCallback)
+
     fun setFavoriteTeam(favorite: Boolean, teamId: String, callback: SetFavoriteTeamCallback)
+
+    fun loadFavoriteTeam(callback: LoadFavoriteTeamsCallback)
 
     fun setFavoriteLeague(leagueId: String, callback: SetFavoriteLeagueCallback)
 
@@ -27,6 +32,8 @@ interface FootballDataSource {
     fun loadFavoriteEvent(callback: LoadFavEventLeagueCallback)
 
     fun isEventHasFavorited(eventId: String, callback: IsEventFavLeagueCallback)
+
+    fun isTeamHasFavorited(teamId: String, callback: IsTeamFavCallback)
 
     interface LoadLeagueCallback {
         fun onLoaded(leagues: List<League>)
@@ -42,6 +49,13 @@ interface FootballDataSource {
         fun onLoaded(team: Team)
         fun onFailed(errorMsg: String)
     }
+
+    interface LoadPlayersCallback {
+        fun onLoaded(players: List<Player>)
+        fun onFailed(errorMsg: String)
+    }
+
+
 
     interface SetFavoriteTeamCallback {
         fun onSavedTeam(teamId: String)
@@ -73,12 +87,24 @@ interface FootballDataSource {
         fun onFailed(errorMsg: String)
     }
 
+    interface LoadFavoriteTeamsCallback {
+        fun onLoaded(teams: List<Team>)
+        fun onFailed(errorMsg: String)
+    }
+
+
+
     interface SetFavoriteEventCallback {
         fun onSavedEvent(eventId: String)
         fun onFailed(errorMsg: String)
     }
 
     interface IsEventFavLeagueCallback {
+        fun onFavorited(isFav: Boolean)
+        fun onFailed(errorMsg: String)
+    }
+
+    interface IsTeamFavCallback {
         fun onFavorited(isFav: Boolean)
         fun onFailed(errorMsg: String)
     }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.team.detail.TeamOverviewFragment"
+    android:padding="@dimen/margin">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/team_formedby"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Formed from 2012"
+                android:textSize="@dimen/text_sub"
+                android:gravity="right"
+                android:fontFamily="@font/lato"
+                android:layout_marginBottom="@dimen/margin_small"/>
+            <TextView
+                android:id="@+id/team_overview"
+                android:layout_below="@+id/team_formedby"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="overview"
+                android:fontFamily="@font/lato"
+                android:textSize="@dimen/text_article"/>
+
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</FrameLayout>

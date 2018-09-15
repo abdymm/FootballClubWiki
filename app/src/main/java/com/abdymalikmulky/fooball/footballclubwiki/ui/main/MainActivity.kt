@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.abdymalikmulky.fooball.footballclubwiki.R
+import com.abdymalikmulky.fooball.footballclubwiki.ui.main.fav.FavFragment
 import com.abdymalikmulky.fooball.footballclubwiki.ui.main.league.LeagueListFragment
 import com.abdymalikmulky.fooball.footballclubwiki.ui.main.match.FixtureFragment
 import com.abdymalikmulky.fooball.footballclubwiki.ui.main.team.TeamListActivity
@@ -51,8 +52,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.navigation_fav_match -> {
-                val fixtureFragment = FixtureFragment.newInstance(1)
-                openFragment(fixtureFragment)
+                val favFragment = FavFragment.newInstance()
+                openFragment(favFragment)
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -64,22 +65,6 @@ class MainActivity : AppCompatActivity() {
         transaction.replace(R.id.container, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.getItemId()) {
-            R.id.menu_team -> {
-                startActivity(intentFor<TeamListActivity>())
-                return true
-            }
-            else -> return super.onOptionsItemSelected(item)
-        }
     }
 
 

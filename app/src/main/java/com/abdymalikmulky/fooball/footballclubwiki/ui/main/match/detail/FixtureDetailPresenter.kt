@@ -2,8 +2,6 @@ package com.abdymalikmulky.fooball.footballclubwiki.ui.main.match.detail
 
 import com.abdymalikmulky.fooball.footballclubwiki.data.FootballDataSource
 import com.abdymalikmulky.fooball.footballclubwiki.data.FootballRepo
-import com.abdymalikmulky.fooball.footballclubwiki.data.event.Event
-import com.abdymalikmulky.fooball.footballclubwiki.data.league.League
 import com.abdymalikmulky.fooball.footballclubwiki.data.team.Team
 
 
@@ -26,12 +24,16 @@ class FixtureDetailPresenter(footballRepo: FootballRepo, fixtureDetailView: Fixt
     }
 
 
-    override fun loadTeam(teamId: String) {
+    override fun loadTeam(isHomeTeam: Boolean, teamId: String) {
         fixtureDetailView.showLoading()
         footballRepo.loadTeam(teamId, object : FootballDataSource.LoadTeamCallback {
             override fun onLoaded(team: Team) {
                 fixtureDetailView.hideLoading()
-                fixtureDetailView.showTeam(team)
+                if(isHomeTeam) {
+                    fixtureDetailView.showHomeTeam(team)
+                } else {
+                    fixtureDetailView.showAwayTeam(team)
+                }
             }
 
             override fun onFailed(errorMsg: String) {

@@ -40,6 +40,10 @@ class FootballRepo(context: Context) : FootballDataSource {
         })
     }
 
+    override fun loadPlayersByTeam(teamId: String, callback: FootballDataSource.LoadPlayersCallback) {
+        footballRemote.loadPlayersByTeam(teamId, callback)
+    }
+
     override fun setFavoriteTeam(favorite: Boolean, teamId: String, callback: FootballDataSource.SetFavoriteTeamCallback) {
         footballLocal.setFavoriteTeam(favorite, teamId, callback)
     }
@@ -100,5 +104,14 @@ class FootballRepo(context: Context) : FootballDataSource {
     override fun isEventHasFavorited(eventId: String, callback: FootballDataSource.IsEventFavLeagueCallback) {
         footballLocal.isEventHasFavorited(eventId, callback)
     }
+
+    override fun isTeamHasFavorited(teamId: String, callback: FootballDataSource.IsTeamFavCallback) {
+        footballLocal.isTeamHasFavorited(teamId, callback)
+    }
+
+    override fun loadFavoriteTeam(callback: FootballDataSource.LoadFavoriteTeamsCallback) {
+        footballLocal.loadFavoriteTeam(callback)
+    }
+
 
 }

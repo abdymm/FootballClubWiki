@@ -6,6 +6,8 @@ import com.abdymalikmulky.fooball.footballclubwiki.data.event.Event
 import com.abdymalikmulky.fooball.footballclubwiki.data.event.EventResponse
 import com.abdymalikmulky.fooball.footballclubwiki.data.league.League
 import com.abdymalikmulky.fooball.footballclubwiki.data.league.LeagueResponse
+import com.abdymalikmulky.fooball.footballclubwiki.data.player.Player
+import com.abdymalikmulky.fooball.footballclubwiki.data.player.PlayerResponse
 import com.abdymalikmulky.fooball.footballclubwiki.data.team.Team
 import com.abdymalikmulky.fooball.footballclubwiki.data.team.TeamResponse
 import com.abdymalikmulky.fooball.footballclubwiki.util.ApiHelper
@@ -15,6 +17,7 @@ import retrofit2.Response
 
 
 class FootballRemote(context: Context) : FootballDataSource {
+
 
 
     internal var context: Context
@@ -92,6 +95,28 @@ class FootballRemote(context: Context) : FootballDataSource {
         })
     }
 
+    override fun loadPlayersByTeam(teamId: String, callback: FootballDataSource.LoadPlayersCallback) {
+        val call = footballApi.getPlayers(teamId)
+        call.enqueue(object : Callback<PlayerResponse>{
+            override fun onFailure(call: Call<PlayerResponse>, t: Throwable) {
+                callback.onFailed(t.localizedMessage)
+            }
+
+            override fun onResponse(call: Call<PlayerResponse>, response: Response<PlayerResponse>) {
+                if (response.isSuccessful) {
+                    val bodyResponse = response.body()
+                    val players: List<Player>
+                    players = bodyResponse!!.player
+
+                    callback.onLoaded(players)
+                } else {
+                    callback.onFailed(response.message())
+                }
+            }
+
+        })
+    }
+
     override fun setFavoriteTeam(favorite: Boolean, teamId: String, callback: FootballDataSource.SetFavoriteTeamCallback) {
         //maybe next store in rmeote server
     }
@@ -133,5 +158,9 @@ class FootballRemote(context: Context) : FootballDataSource {
     override fun loadFavoriteEvent(callback: FootballDataSource.LoadFavEventLeagueCallback) {
     }
     override fun isEventHasFavorited(eventId: String, callback: FootballDataSource.IsEventFavLeagueCallback) {
+    }
+    override fun isTeamHasFavorited(teamId: String, callback: FootballDataSource.IsTeamFavCallback) {
+    }
+    override fun loadFavoriteTeam(callback: FootballDataSource.LoadFavoriteTeamsCallback) {
     }
 }

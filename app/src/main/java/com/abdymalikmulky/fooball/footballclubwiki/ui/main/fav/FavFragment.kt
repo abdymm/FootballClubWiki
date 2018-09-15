@@ -1,15 +1,15 @@
-package com.abdymalikmulky.fooball.footballclubwiki.ui.main.match
+package com.abdymalikmulky.fooball.footballclubwiki.ui.main.fav
 
 
 import android.content.Context
-import android.opengl.Visibility
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,33 +27,41 @@ import com.abdymalikmulky.fooball.footballclubwiki.util.visible
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.*
-import android.util.TypedValue
 import android.widget.Button
+import com.abdymalikmulky.fooball.footballclubwiki.data.team.Team
+import com.abdymalikmulky.fooball.footballclubwiki.ui.main.match.FixtureAdapter
+import com.abdymalikmulky.fooball.footballclubwiki.ui.main.team.TeamListAdapter
+import com.abdymalikmulky.fooball.footballclubwiki.ui.main.team.detail.TeamDetailActivity
+import com.abdymalikmulky.fooball.footballclubwiki.util.invisible
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
 
-class FixtureFragment : Fragment(), FixtureContract.View {
-
-    var isPastEvent = true
-    var isFavorite = 0
+class FavFragment : Fragment(), FavContract.View {
 
     private lateinit var sharedPreferenceUtil: SharedPreferenceUtil
+    private lateinit var leagueId: String
 
     //Presenter
-    private lateinit var fixturePresenter: FixtureContract.Presenter
+    private lateinit var favPresenter: FavContract.Presenter
 
     //Repo
     private lateinit var footballRepo: FootballRepo
 
     private var events: MutableList<Event> = mutableListOf()
+    private var teams: MutableList<Team> = mutableListOf()
+
+    private lateinit var progressBar: ProgressBar
 
     private lateinit var listFixture: RecyclerView
     private lateinit var fixtureAdapter: FixtureAdapter
-    private lateinit var progressBar: ProgressBar
-    private lateinit var swipeRefresh: SwipeRefreshLayout
+    private lateinit var swipeRefreshFixture: SwipeRefreshLayout
 
-    private lateinit var nextButton: Button
-    private lateinit var pastButton: Button
+    private lateinit var listTeam: RecyclerView
+    private lateinit var teamListAdapter: TeamListAdapter
+    private lateinit var swipeRefreshTeam: SwipeRefreshLayout
+
+    private lateinit var fixtureButton: Button
+    private lateinit var teamButton: Button
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -74,33 +82,35 @@ class FixtureFragment : Fragment(), FixtureContract.View {
                     }
                     orientation = LinearLayout.HORIZONTAL
 
-                    pastButton = button {
+                    fixtureButton = button {
                         isClickable = true
-                        text = "PAST"
+                        text = "FIXTURE"
                         background = ContextCompat.getDrawable(activity!!.applicationContext, R.drawable.background_ripple)
                         textColor = resources.getColor(R.color.colorPrimary, null)
                         onClick {
                             textColor = resources.getColor(R.color.colorPrimary, null)
-                            nextButton.textColor = resources.getColor(R.color.colorButtonText, null)
+                            teamButton.textColor = resources.getColor(R.color.colorButtonText, null)
 
-                            isPastEvent = true
-                            loadEvents(isPastEvent)
+                            swipeRefreshFixture.visible()
+                            swipeRefreshTeam.gone()
+                            favPresenter.loadFavoriteEvents(leagueId)
                         }
                     }.lparams(width = wrapContent, height = wrapContent, weight = 0.5f) {
                         rightMargin = dip(8)
                     }
 
-                    nextButton = button {
+                    teamButton = button {
                         isClickable = true
-                        text = "NEXT"
+                        text = "TEAM"
                         background = ContextCompat.getDrawable(activity!!.applicationContext, R.drawable.background_ripple)
                         textColor = resources.getColor(R.color.colorButtonText, null)
                         onClick {
                             textColor = resources.getColor(R.color.colorPrimary, null)
-                            pastButton.textColor = resources.getColor(R.color.colorButtonText, null)
+                            fixtureButton.textColor = resources.getColor(R.color.colorButtonText, null)
 
-                            isPastEvent = false
-                            loadEvents(isPastEvent)
+                            swipeRefreshFixture.gone()
+                            swipeRefreshTeam.visible()
+                            favPresenter.loadFavoriteTeams()
                         }
                     }.lparams(width = wrapContent, height = wrapContent, weight = 0.5f) {
                         leftMargin = dip(8)
@@ -109,7 +119,11 @@ class FixtureFragment : Fragment(), FixtureContract.View {
 
                 }
 
-                swipeRefresh = swipeRefreshLayout {
+                progressBar = progressBar {}.lparams {
+                    gravity = Gravity.CENTER
+                }
+
+                swipeRefreshFixture = swipeRefreshLayout {
                     setColorSchemeResources(R.color.colorAccent,
                             android.R.color.holo_green_light,
                             android.R.color.holo_orange_light,
@@ -117,18 +131,38 @@ class FixtureFragment : Fragment(), FixtureContract.View {
 
                     relativeLayout {
                         lparams(width = matchParent, height = wrapContent)
-
                         listFixture = recyclerView {
                             id = R.id.event_list
                             lparams(width = matchParent, height = wrapContent)
                             layoutManager = LinearLayoutManager(ctx)
                         }
 
-                        progressBar = progressBar {}.lparams {
-                            centerHorizontally()
-                        }
                     }
                 }
+
+                swipeRefreshTeam = swipeRefreshLayout {
+                    setColorSchemeResources(R.color.colorAccent,
+                            android.R.color.holo_green_light,
+                            android.R.color.holo_orange_light,
+                            android.R.color.holo_red_light)
+
+                    relativeLayout {
+                        lparams(width = matchParent, height = wrapContent)
+                        backgroundColor = resources.getColor(R.color.colorBackground)
+
+                        listTeam = recyclerView {
+                            id = R.id.team_list
+                            lparams(width = matchParent, height = wrapContent)
+                            layoutManager = LinearLayoutManager(ctx)
+                            backgroundColor = resources.getColor(R.color.colorBackground)
+
+                        }
+
+                    }
+                }
+
+
+
             }
         }.view
 
@@ -136,24 +170,9 @@ class FixtureFragment : Fragment(), FixtureContract.View {
 
     companion object {
 
-        fun newInstance(): FixtureFragment {
-            val fragment = FixtureFragment()
+        fun newInstance(): FavFragment {
+            val fragment = FavFragment()
             return fragment
-        }
-        fun newInstance(isFavorite: Int): FixtureFragment {
-            val fragment = FixtureFragment()
-            val args = Bundle()
-            args.putInt("IS_FAVORITE", isFavorite)
-            fragment.setArguments(args)
-            return fragment
-        }
-
-    }
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        arguments?.getInt(getString(R.string.KEY_IS_FAVORITE))?.let {
-            isFavorite = it
         }
 
     }
@@ -162,21 +181,31 @@ class FixtureFragment : Fragment(), FixtureContract.View {
         super.onViewCreated(view, savedInstanceState)
 
         sharedPreferenceUtil = SharedPreferenceUtil(activity?.applicationContext)
+        leagueId = sharedPreferenceUtil.pref.getString(getString(R.string.PREF_LEAGUE), getString(R.string.league_id))
 
         initPresenterRepo()
 
-        if(isFavorite==1) {
-            nextButton.visibility = View.GONE
-            pastButton.visibility = View.GONE
-        }
+        initList()
 
-        loadEvents(isPastEvent)
-        fixtureAdapter = FixtureAdapter(isPastEvent, events) {
-            startActivity(intentFor<FixtureDetailActivity>(getString(R.string.EXTRA_FIXTURE) to it, getString(R.string.KEY_IS_PAST_EVENT) to isPastEvent))
+        favPresenter.loadFavoriteEvents(leagueId)
+    }
+
+    private fun initList() {
+        fixtureAdapter = FixtureAdapter(true, events) {
+            startActivity(intentFor<FixtureDetailActivity>(getString(R.string.EXTRA_FIXTURE) to it, getString(R.string.KEY_IS_PAST_EVENT) to true))
         }
         listFixture.adapter = fixtureAdapter
-        swipeRefresh.onRefresh {
-            loadEvents(isPastEvent)
+        swipeRefreshFixture.onRefresh {
+            favPresenter.loadFavoriteEvents(leagueId)
+        }
+
+        teamListAdapter = TeamListAdapter(teams) {
+            startActivity(intentFor<TeamDetailActivity>(getString(R.string.EXTRA_TEAM) to it))
+        }
+        listTeam.adapter = teamListAdapter
+        listTeam.addItemDecoration(DividerItemDecoration(listTeam.getContext(), DividerItemDecoration.VERTICAL))
+        swipeRefreshTeam.onRefresh {
+            favPresenter.loadFavoriteTeams()
         }
     }
 
@@ -185,41 +214,41 @@ class FixtureFragment : Fragment(), FixtureContract.View {
         footballRepo = FootballRepo(activity!!.applicationContext)
 
         //Presenter init
-        fixturePresenter = FixturePresenter(footballRepo, this)
+        favPresenter = FavPresenter(footballRepo, this)
     }
 
     override fun showLoading() {
         progressBar.visible()
         listFixture.gone()
+        listTeam.gone()
     }
 
     override fun hideLoading() {
         progressBar.gone()
         listFixture.visible()
+        listTeam.visible()
     }
 
     override fun showFixtureList(events: List<Event>) {
-        Log.d("DataEvent %s", events.toString())
-        swipeRefresh.isRefreshing = false
+        swipeRefreshFixture.isRefreshing = false
         this.events.clear()
         this.events.addAll(events)
-        fixtureAdapter.refresh(isPastEvent, this.events)
+        fixtureAdapter.refresh(true, this.events)
     }
 
-    override fun setPresenter(presenter: FixtureContract.Presenter) {
-        fixturePresenter = presenter
+    override fun showTeamList(teams: List<Team>) {
+        swipeRefreshTeam.isRefreshing = false
+        this.teams.clear()
+        this.teams.addAll(teams)
+        teamListAdapter.notifyDataSetChanged()
+    }
+
+    override fun setPresenter(presenter: FavContract.Presenter) {
+        favPresenter = presenter
     }
 
     override fun showError(message: String) {
         toast(message)
     }
 
-    internal fun loadEvents(isPastEvent: Boolean) {
-        val leagueId = sharedPreferenceUtil.pref.getString(getString(R.string.PREF_LEAGUE), getString(R.string.league_id))
-        if(isFavorite==1) {
-            fixturePresenter.loadFavoriteEvent(leagueId)
-        } else {
-            fixturePresenter.loadEvent(isPastEvent, leagueId)
-        }
-    }
 }

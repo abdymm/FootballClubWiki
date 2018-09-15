@@ -2,6 +2,7 @@ package com.abdymalikmulky.fooball.footballclubwiki.data
 
 import com.abdymalikmulky.fooball.footballclubwiki.data.event.EventResponse
 import com.abdymalikmulky.fooball.footballclubwiki.data.league.LeagueResponse
+import com.abdymalikmulky.fooball.footballclubwiki.data.player.PlayerResponse
 import com.abdymalikmulky.fooball.footballclubwiki.data.team.Team
 import com.abdymalikmulky.fooball.footballclubwiki.data.team.TeamResponse
 import id.or.ypt.agendaapp.util.EndpointUtil
@@ -21,7 +22,7 @@ interface FootballApi {
     fun getTeam(@Query(EndpointUtil.KEY_ID) teamId: String): Call<TeamResponse>
 
     @GET(EndpointUtil.GET_PLAYERS)
-    fun getPlayers(@Query(EndpointUtil.KEY_ID) teamId: String): Call<Team>
+    fun getPlayers(@Query(EndpointUtil.KEY_ID) teamId: String): Call<PlayerResponse>
 
     @GET(EndpointUtil.GET_EVENT_PAST)
     fun getEventsPast(@Query(EndpointUtil.KEY_ID) leagueId: String): Call<EventResponse>

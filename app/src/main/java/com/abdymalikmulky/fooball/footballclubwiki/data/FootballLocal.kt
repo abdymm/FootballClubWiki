@@ -11,8 +11,6 @@ import com.abdymalikmulky.fooball.footballclubwiki.util.SharedPreferenceUtil
 import org.jetbrains.anko.db.*
 
 class FootballLocal(context: Context) : FootballDataSource {
-
-
     internal var sharedPreferenceUtil: SharedPreferenceUtil
 
     internal var context: Context
@@ -162,4 +160,37 @@ class FootballLocal(context: Context) : FootballDataSource {
             }
         }
     }
+
+    override fun loadPlayersByTeam(teamId: String, callback: FootballDataSource.LoadPlayersCallback) {
+    }
+
+    override fun isTeamHasFavorited(teamId: String, callback: FootballDataSource.IsTeamFavCallback) {
+        database.use {
+            select(Team.TABLE)
+                    .whereArgs("(${Team.TEAM_ID} = {id}) and (${Team.IS_FAVORITE} = {isFav})",
+                            "id" to teamId,
+                            "isFav" to 1).exec {
+                        if(this.count > 0) {
+                            callback.onFavorited(true)
+                        } else {
+                            callback.onFavorited(false)
+                        }
+                    }
+        }
+    }
+    override fun loadFavoriteTeam(callback: FootballDataSource.LoadFavoriteTeamsCallback) {
+        var teams = ArrayList<Team>()
+        database.use {
+            select(Team.TABLE).exec {
+                if (moveToFirst()) {
+                    do {
+                        val team = Team(this.getString(1), this.getString(3), "", this.getString(4))
+                        teams.add(team)
+                    } while (moveToNext())
+                }
+                callback.onLoaded(teams)
+            }
+        }
+    }
+
 }

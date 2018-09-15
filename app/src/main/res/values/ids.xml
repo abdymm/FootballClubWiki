@@ -11,4 +11,8 @@
 
     <item name="event_list" type="id" />
     <item name="event_list2" type="id" />
+
+    <item name="player_name" type="id" />
+    <item name="player_pos" type="id" />
+    <item name="player_photo" type="id" />
 </resources>

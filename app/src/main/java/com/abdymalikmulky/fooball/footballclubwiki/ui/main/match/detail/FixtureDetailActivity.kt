@@ -10,19 +10,14 @@ import com.abdymalikmulky.fooball.footballclubwiki.R
 import com.abdymalikmulky.fooball.footballclubwiki.data.FootballRepo
 import com.abdymalikmulky.fooball.footballclubwiki.data.event.Event
 import com.abdymalikmulky.fooball.footballclubwiki.data.team.Team
-import com.abdymalikmulky.fooball.footballclubwiki.ui.main.match.FixtureContract
-import com.abdymalikmulky.fooball.footballclubwiki.ui.main.match.FixturePresenter
+import com.abdymalikmulky.fooball.footballclubwiki.ui.main.team.detail.TeamDetailActivity
 import com.abdymalikmulky.fooball.footballclubwiki.util.DateTimeUtil
-import com.abdymalikmulky.fooball.footballclubwiki.util.gone
-import com.abdymalikmulky.fooball.footballclubwiki.util.visible
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_fixture_detail.*
-import kotlinx.android.synthetic.main.list_event.view.*
+import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 
 class FixtureDetailActivity : AppCompatActivity(), FixtureDetailContract.View {
-
-
 
     //Presenter
     private lateinit var fixtureDetailPresenter: FixtureDetailContract.Presenter
@@ -54,7 +49,7 @@ class FixtureDetailActivity : AppCompatActivity(), FixtureDetailContract.View {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         this.menu = menu
-        inflater.inflate(R.menu.team, menu)
+        inflater.inflate(R.menu.fixture, menu)
 
         fixtureDetailPresenter.checkIsEventFavorited(event.idEvent)
 
@@ -63,8 +58,8 @@ class FixtureDetailActivity : AppCompatActivity(), FixtureDetailContract.View {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.getItemId()) {
-            R.id.menu_fav -> {
-                val unfaveMenu = this.menu.findItem(R.id.menu_unfav)
+            R.id.menu_fixture_fav -> {
+                val unfaveMenu = this.menu.findItem(R.id.menu_fixture_unfav)
                 unfaveMenu.isVisible = true
                 item.isVisible = false
 
@@ -72,8 +67,8 @@ class FixtureDetailActivity : AppCompatActivity(), FixtureDetailContract.View {
 
                 return true
             }
-            R.id.menu_unfav -> {
-                val faveMenu = this.menu.findItem(R.id.menu_fav)
+            R.id.menu_fixture_unfav -> {
+                val faveMenu = this.menu.findItem(R.id.menu_fixture_fav)
                 faveMenu.isVisible = true
                 item.isVisible = false
 
@@ -102,13 +97,19 @@ class FixtureDetailActivity : AppCompatActivity(), FixtureDetailContract.View {
         //progressBar.gone()
     }
 
-    override fun showTeam(team: Team) {
-        if(team.teamName!!.equals(event.homeTeam)) {
-            Picasso.get().load(team.teamBadge).into(event_home_badge)
-        } else {
-            Picasso.get().load(team.teamBadge).into(event_away_badge)
+    override fun showHomeTeam(team: Team) {
+        Picasso.get().load(team.teamBadge).into(event_home_badge)
+        event_home_badge.setOnClickListener {
+            startActivity(intentFor<TeamDetailActivity>(getString(R.string.EXTRA_TEAM) to team))
         }
     }
+    override fun showAwayTeam(team: Team) {
+        Picasso.get().load(team.teamBadge).into(event_away_badge)
+        event_away_badge.setOnClickListener {
+            startActivity(intentFor<TeamDetailActivity>(getString(R.string.EXTRA_TEAM) to team))
+        }
+    }
+
 
     override fun showFixture(event: Event) {
         Log.d("EVENTDETAIL ", event.toString())
@@ -136,8 +137,8 @@ class FixtureDetailActivity : AppCompatActivity(), FixtureDetailContract.View {
             event_time_status.text = "UPCOMING"
         }
 
-        fixtureDetailPresenter.loadTeam(event.idHomeTeam)
-        fixtureDetailPresenter.loadTeam(event.idAwayTeam)
+        fixtureDetailPresenter.loadTeam(true, event.idHomeTeam)
+        fixtureDetailPresenter.loadTeam(false, event.idAwayTeam)
 
 
     }
@@ -203,8 +204,8 @@ class FixtureDetailActivity : AppCompatActivity(), FixtureDetailContract.View {
     }
 
     override fun showEventFav(isFavorite: Boolean) {
-        val unfaveMenu = this.menu.findItem(R.id.menu_unfav)
-        val faveMenu = this.menu.findItem(R.id.menu_fav)
+        val unfaveMenu = this.menu.findItem(R.id.menu_fixture_unfav)
+        val faveMenu = this.menu.findItem(R.id.menu_fixture_fav)
 
         faveMenu.isVisible = true
         unfaveMenu.isVisible = false

@@ -14,10 +14,51 @@ data class Team (
         var teamDescription: String?,
 
         @SerializedName("strTeamBadge")
-        var teamBadge: String) : Serializable {
+        var teamBadge: String,
 
-        constructor() : this("", "", "", "")
+        @SerializedName("strAlternate")
+        var teamNick: String?,
 
+        @SerializedName("intFormedYear")
+        var formedYear: String?,
+
+        @SerializedName("strCountry")
+        var teamCountry: String?,
+
+        @SerializedName("intStadiumCapacity")
+        var stadiumCapacity: String?,
+
+        @SerializedName("strStadium")
+        var stadiumName: String?,
+
+        @SerializedName("strStadiumLocation")
+        var stadiumLocation: String?,
+
+        @SerializedName("strStadiumDescription")
+        var stadiumDesc: String?,
+
+        @SerializedName("strStadiumThumb")
+        var stadiumThumb: String?,
+
+        @SerializedName("strTeamBanner")
+        var banner: String?,
+
+        @SerializedName("strTwitter")
+        var twitter: String?,
+
+        @SerializedName("strWebsite")
+        var website: String?,
+
+        @SerializedName("strYoutube")
+        var youtube: String?) : Serializable {
+
+        constructor() : this("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")
+        constructor(teamId: String, teamName: String, teamDescription: String?, teamBadge: String) : this() {
+                this.teamId = teamId
+                this.teamName = teamName
+                this.teamDescription = teamDescription
+                this.teamBadge = teamBadge
+        }
 
         companion object {
                 const val TABLE: String = "TEAM"

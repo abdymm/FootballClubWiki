@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.team.detail.TeamStadiumFragment"
+    android:padding="@dimen/margin">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/team_stadium_title"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_sub_title"
+                android:text="Emirates Stadium"
+                android:fontFamily="@font/lato_bold"/>
+
+            <TextView
+                android:id="@+id/team_stadium_capacity"
+                android:layout_below="@+id/team_stadium_title"
+                android:layout_alignParentStart="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_sub"
+                android:text="Capacity : 10.000"
+                android:gravity="right"
+                android:fontFamily="@font/lato"/>
+
+            <TextView
+                android:id="@+id/team_stadium_location"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/team_stadium_capacity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_sub"
+                android:gravity="right"
+                android:text="Location : London"
+                android:fontFamily="@font/lato"/>
+
+
+            <ImageView
+                android:id="@+id/team_stadium_photo"
+                android:layout_marginTop="@dimen/margin"
+                android:layout_below="@id/team_stadium_location"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:foregroundGravity="left"
+                android:scaleType="centerCrop"/>
+
+            <TextView
+                android:id="@+id/team_stadium_description"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/team_stadium_photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_sub_med"
+                android:layout_marginTop="@dimen/margin_small"
+                android:text="Emirates Stadium "
+                android:fontFamily="@font/lato"/>
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</FrameLayout>

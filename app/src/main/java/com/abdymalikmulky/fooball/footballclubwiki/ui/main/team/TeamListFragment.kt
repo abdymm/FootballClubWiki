@@ -33,7 +33,6 @@ class TeamListFragment : Fragment(), TeamContract.View {
     //Repo
     private lateinit var footballRepo: FootballRepo
 
-
     private lateinit var leagueId: String
     private var teams: MutableList<Team> = mutableListOf()
 

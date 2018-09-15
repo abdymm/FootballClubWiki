@@ -1,11 +1,13 @@
 package com.abdymalikmulky.fooball.footballclubwiki.ui.main.match
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.abdymalikmulky.fooball.footballclubwiki.R
 import com.abdymalikmulky.fooball.footballclubwiki.R.id.team_badge
 import com.abdymalikmulky.fooball.footballclubwiki.R.id.team_name
@@ -19,12 +21,11 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 
-class FixtureAdapter(private val isPastEvent: Boolean,private val events: List<Event>, private val listener: (Event) -> Unit)
+class FixtureAdapter(private var isPastEvent: Boolean,private var events: List<Event>, private val listener: (Event) -> Unit)
     : RecyclerView.Adapter<FixtureAdapter.EventViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
             EventViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_event, parent, false))
-
 
 
     override fun onBindViewHolder(holderEvent: EventViewHolder, position: Int) {
@@ -41,6 +42,8 @@ class FixtureAdapter(private val isPastEvent: Boolean,private val events: List<E
             itemView.list_event_home_name.text = event.homeTeam
             itemView.list_event_away_name.text = event.awayTeam
             itemView.list_event_score.text = "${event.homeScore} : ${event.awayScore}"
+
+
             if(isPastEvent) {
                 itemView.list_event_time_status.text = "FULL TIME"
             } else {
@@ -66,5 +69,10 @@ class FixtureAdapter(private val isPastEvent: Boolean,private val events: List<E
             }
 
         }
+    }
+    fun refresh(isPastEvent: Boolean, events: List<Event>) {
+        this.isPastEvent = isPastEvent
+        this.events = events
+        notifyDataSetChanged()
     }
 }
